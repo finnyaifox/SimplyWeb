@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   textInput: {
       flex: 1,
       color: '#fff',
-      fontSize: isMobile ? 16 : 18, // Größerer Text passend zur Höhe
+      fontSize: 16, // Größerer Text passend zur Höhe
       fontWeight: '500',
       height: '100%',
   },
