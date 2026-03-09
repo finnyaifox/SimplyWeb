@@ -18,8 +18,9 @@
       "badge": "Simply – Die Zukunft ist einfach ✨",
       "title": "Perfekte <1>Insights</1> für dein Leben.",
       "subtitle": "Kein Chaos mehr. Erlebe die Klarheit von intelligenten Analysen, Ephemeral Chat und SiLive Voice.",
-      "btnStart": "Jetzt starten",
-      "btnLearnMore": "Mehr erfahren"
+      "btnTheApp": "Die App",
+      "btnLearnMore": "Mehr erfahren",
+      "btnTestApp": "Hier App Testen (Ohne Insights)"
     },
     "features": {
       "title": "Smarter Leben",
@@ -82,6 +83,7 @@
       "subtitle": "Hinter dem Code.",
       "text1": "<1>Simply</1> ist nicht das Produkt einer riesigen Corporation mit tausenden von Mitarbeitern. Es ist das Ergebnis einer klaren Vision: Technologie sollte uns nicht überwältigen, sondern uns <2>Klarheit</2> schenken.",
       "text2": "Als <1>One-Man-Gründer</1> entwickle ich diese App mit einer Leidenschaft für Details, die man in großen Teams oft vermisst. Jedes Feature, jede Animation und jede Zeile Code wurde geschrieben, um dir zu helfen, den Fokus in einer lauten Welt zurückzugewinnen.",
+      "founderName": "Leo Z.",
       "role": "Gründer & Entwickler"
     },
     "contact": {

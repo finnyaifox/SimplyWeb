@@ -298,8 +298,10 @@ const FeatureCard = ({ icon, title, desc, delay, isDark }: any) => {
 };
 
 const PricingCard = ({ title, price, period, features, isPopular, isDark, index, priceSubtitle, popularText, chooseText }: any) => {
+    const { width } = useWindowDimensions();
+    const isMobile = width < 768;
     // Stärkere Hervorhebung für Popular Card (1.1 Scale)
-    const scale = useSharedValue(isPopular ? 1.1 : 1);
+    const scale = useSharedValue(isPopular ? (isMobile ? 1.05 : 1.1) : 1);
     const translateY = useSharedValue(isPopular ? -10 : 0); // Leicht angehoben
 
     const animatedStyle = useAnimatedStyle(() => ({
@@ -332,6 +334,7 @@ const PricingCard = ({ title, price, period, features, isPopular, isDark, index,
                 borderColor: isPopular ? Colors.primary : (isDark ? Colors.dark.glassBorder : Colors.light.glassBorder),
                 borderWidth: isPopular ? 2 : 1,
                 cursor: Platform.OS === 'web' ? 'pointer' : 'auto',
+                padding: isMobile ? 20 : 32,
                 // Stärkerer Schatten für Popular
                 shadowColor: isPopular ? Colors.primary : 'black',
                 shadowOffset: { width: 0, height: isPopular ? 10 : 4 },
@@ -349,12 +352,12 @@ const PricingCard = ({ title, price, period, features, isPopular, isDark, index,
                 <Text style={styles.popularText}>{popularText || 'Empfohlen'}</Text>
                 </View>
             )}
-            <Text style={[styles.pricingTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>{title}</Text>
+            <Text style={[styles.pricingTitle, { color: isDark ? Colors.dark.text : Colors.light.text, fontSize: isMobile ? 20 : 24 }]}>{title}</Text>
             {priceSubtitle && (
                 <Text style={{ color: Colors.primary, fontSize: 14, fontWeight: 'bold', marginBottom: 8 }}>{priceSubtitle}</Text>
             )}
             <View style={styles.priceContainer}>
-                <Text style={[styles.priceAmount, { color: isDark ? Colors.dark.text : Colors.light.text }]}>{price}</Text>
+                <Text style={[styles.priceAmount, { color: isDark ? Colors.dark.text : Colors.light.text, fontSize: isMobile ? 36 : 48 }]}>{price}</Text>
                 <Text style={[styles.pricePeriod, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>{period}</Text>
             </View>
             <View style={styles.divider} />
@@ -379,6 +382,11 @@ const ImageCarousel = ({ isDark }: { isDark: boolean }) => {
     const { width } = useWindowDimensions();
     const isMobile = width < 768;
     const { t } = useTranslation();
+    const router = useRouter();
+
+    const startApp = () => {
+        router.push('/(tabs)');
+    };
 
     const images = [
         require('@/assets/images/smarter-leben/slide1.jpg'),
@@ -532,6 +540,24 @@ const ImageCarousel = ({ isDark }: { isDark: boolean }) => {
                         <Text style={styles.storeLargeText}>{t('landing.carousel.storeLargePlay')}</Text>
                     </View>
                 </TouchableOpacity>
+                
+                {/* NEW: Test App Button below icons */}
+                <TouchableOpacity 
+                    onPress={startApp}
+                    style={[
+                        styles.storeBtn, 
+                        { 
+                            backgroundColor: Colors.primary, 
+                            borderColor: Colors.primary,
+                            width: isMobile ? '100%' : 'auto',
+                            justifyContent: 'center',
+                            marginTop: isMobile ? 8 : 0
+                        }
+                    ]}
+                >
+                    <Ionicons name="rocket-outline" size={24} color="white" />
+                    <Text style={[styles.storeLargeText, { marginLeft: 8 }]}>{t('landing.hero.btnTestApp')}</Text>
+                </TouchableOpacity>
              </View>
         </View>
     );
@@ -565,6 +591,7 @@ const GlobalStyles = () => {
 
 export default function LandingPage() {
   const { width } = useWindowDimensions();
+  const isMobile = width < 768;
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const router = useRouter();
@@ -625,13 +652,17 @@ export default function LandingPage() {
                         {t('landing.hero.subtitle')}
                     </Animated.Text>
 
-                    <Animated.View entering={FadeInDown.delay(600).duration(1000)} style={styles.heroButtons}>
-                        <TouchableOpacity onPress={startApp} style={[styles.primaryBtn, { backgroundColor: Colors.primary, shadowColor: Colors.primary }]}>
-                            <Text style={styles.primaryBtnText}>{t('landing.hero.btnStart')}</Text>
-                            <Ionicons name="arrow-forward" size={20} color="white" />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => scrollToSection('features')} style={[styles.secondaryBtn, { borderColor: isDark ? Colors.dark.border : Colors.light.border }]}>
+                    <Animated.View entering={FadeInDown.delay(600).duration(1000)} style={styles.heroButtonsColumn}>
+                        <TouchableOpacity onPress={() => scrollToSection('features')} style={[styles.secondaryBtn, { borderColor: isDark ? Colors.dark.border : Colors.light.border, width: '100%', justifyContent: 'center' }]}>
                             <Text style={[styles.secondaryBtnText, { color: isDark ? Colors.dark.text : Colors.light.text }]}>{t('landing.hero.btnLearnMore')}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => scrollToSection('carousel')} style={[styles.primaryBtn, { backgroundColor: Colors.primary, shadowColor: Colors.primary, width: '100%', justifyContent: 'center' }]}>
+                            <Text style={styles.primaryBtnText}>{t('landing.hero.btnTheApp')}</Text>
+                            <Ionicons name="images-outline" size={20} color="white" />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={startApp} style={[styles.secondaryBtn, { borderColor: isDark ? Colors.dark.border : Colors.light.border, width: '100%', justifyContent: 'center' }]}>
+                            <Text style={[styles.secondaryBtnText, { color: isDark ? Colors.dark.text : Colors.light.text }]}>{t('landing.hero.btnTestApp')}</Text>
+                            <Ionicons name="arrow-forward" size={20} color={isDark ? Colors.dark.text : Colors.light.text} />
                         </TouchableOpacity>
                     </Animated.View>
                 </View>
@@ -702,7 +733,7 @@ export default function LandingPage() {
         </View>
 
         {/* --- CAROUSEL SHOWCASE --- */}
-        <View style={[styles.sectionContainer, { paddingVertical: 100 }]}>
+        <View nativeID="carousel" style={[styles.sectionContainer, { paddingVertical: 100 }]}>
             <ImageCarousel isDark={isDark} />
         </View>
 
@@ -761,8 +792,8 @@ export default function LandingPage() {
             />
             
             <View style={[styles.aboutContent, { maxWidth: 1000 }]}>
-                <Animated.View entering={FadeInUp.duration(800)} style={[styles.aboutTextContainer, { padding: 60, backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)', borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }]}>
-                    <Text style={[styles.aboutText, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary, fontSize: 24, lineHeight: 36 }]}>
+                <Animated.View entering={FadeInUp.duration(800)} style={[styles.aboutTextContainer, { padding: isMobile ? 24 : 60, backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)', borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }]}>
+                    <Text style={[styles.aboutText, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary, fontSize: isMobile ? 18 : 24, lineHeight: isMobile ? 28 : 36 }]}>
                         <Trans
                             t={t}
                             i18nKey="landing.about.text1"
@@ -773,7 +804,7 @@ export default function LandingPage() {
                         />
                     </Text>
                     <View style={{ height: 24 }} />
-                    <Text style={[styles.aboutText, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary, fontSize: 24, lineHeight: 36 }]}>
+                    <Text style={[styles.aboutText, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary, fontSize: isMobile ? 18 : 24, lineHeight: isMobile ? 28 : 36 }]}>
                         <Trans
                             t={t}
                             i18nKey="landing.about.text2"
@@ -788,7 +819,7 @@ export default function LandingPage() {
                             <Ionicons name="code-slash" size={32} color="white" />
                         </View>
                         <View>
-                            <Text style={[styles.founderName, { color: isDark ? Colors.dark.text : Colors.light.text, fontSize: 22 }]}>Leon</Text>
+                            <Text style={[styles.founderName, { color: isDark ? Colors.dark.text : Colors.light.text, fontSize: 22 }]}>{t('landing.about.founderName', 'Leon')}</Text>
                             <Text style={[styles.founderRole, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary, fontSize: 18 }]}>{t('landing.about.role')}</Text>
                         </View>
                     </View>
@@ -948,6 +979,14 @@ const styles = StyleSheet.create({
     marginBottom: 60,
     flexWrap: 'wrap',
     justifyContent: width > 960 ? 'flex-start' : 'center',
+  },
+  heroButtonsColumn: {
+    flexDirection: 'column',
+    gap: 16,
+    marginBottom: 60,
+    width: '100%',
+    maxWidth: 300,
+    alignItems: width > 960 ? 'flex-start' : 'center',
   },
   primaryBtn: {
     flexDirection: 'row',

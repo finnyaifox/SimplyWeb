@@ -39,7 +39,14 @@ export default function WebNavBar() {
 
   const scrollToSection = async (sectionId: string) => {
     // console.log('[WebNavBar] scrollToSection:', sectionId, 'Current Path:', pathname);
-    setIsMobileMenuOpen(false);
+    
+    if (isMobile) {
+        setIsMobileMenuOpen(false);
+        // Kleine Verzögerung für Mobile, damit das Modal sauber schließt bevor gescrollt wird
+        await new Promise(resolve => setTimeout(resolve, 300));
+    } else {
+        setIsMobileMenuOpen(false);
+    }
     
     // Check if it's a page link instead of a section
     const pageLinks = ['impressum', 'agb', 'datenschutz'];
@@ -221,17 +228,17 @@ export default function WebNavBar() {
                                                 resizeMode="contain"
                                             />
                                             
-                                            <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]} onPress={() => { signInWithGoogle(); setIsLoginPopoverVisible(false); }}>
+                                            <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]} onPress={() => { /* dummy */ }}>
                                                 <Ionicons name="logo-google" size={20} color={isDark ? "white" : "black"} style={{ marginRight: 10 }} />
                                                 <Text style={[styles.authBtnText, { color: isDark ? 'white' : 'black' }]}>{t('nav.loginGoogle')}</Text>
                                             </TouchableOpacity>
 
-                                            <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]}>
+                                            <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]} onPress={() => { /* dummy */ }}>
                                                 <Ionicons name="logo-apple" size={20} color={isDark ? "white" : "black"} style={{ marginRight: 10 }} />
                                                 <Text style={[styles.authBtnText, { color: isDark ? 'white' : 'black' }]}>{t('nav.loginApple')}</Text>
                                             </TouchableOpacity>
 
-                                            <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]}>
+                                            <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]} onPress={() => { /* dummy */ }}>
                                                 <Ionicons name="logo-facebook" size={20} color={isDark ? "white" : "#1877F2"} style={{ marginRight: 10 }} />
                                                 <Text style={[styles.authBtnText, { color: isDark ? 'white' : 'black' }]}>{t('nav.loginFacebook')}</Text>
                                             </TouchableOpacity>
@@ -311,10 +318,10 @@ export default function WebNavBar() {
                             style={[styles.ctaBtn, { backgroundColor: Colors.primary, justifyContent: 'center', marginTop: 20 }]}
                             onPress={() => {
                                 setIsMobileMenuOpen(false);
-                                handleLoginAction();
+                                router.push('/(tabs)');
                             }}
                         >
-                            <Text style={styles.ctaText}>{user ? t('nav.openApp') : t('nav.login')}</Text>
+                            <Text style={styles.ctaText}>{t('nav.openApp')}</Text>
                             <Ionicons name="arrow-forward" size={16} color="white" style={{marginLeft: 4}} />
                         </TouchableOpacity>
 

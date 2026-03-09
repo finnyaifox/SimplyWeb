@@ -14,7 +14,7 @@ export default function ImpressumPage() {
         
         <Text style={[styles.sectionTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>Angaben gemäß § 5 TMG</Text>
         <Text style={[styles.text, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
-          Leon [Nachname]{"\n"}
+          Leo Z.{"\n"}
           SimplyAI{"\n"}
           [Straße Hausnummer]{"\n"}
           [PLZ Ort]
@@ -33,7 +33,7 @@ export default function ImpressumPage() {
 
         <Text style={[styles.sectionTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</Text>
         <Text style={[styles.text, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
-          Leon [Nachname]{"\n"}
+          Leo Z.{"\n"}
           [Anschrift wie oben]
         </Text>
 

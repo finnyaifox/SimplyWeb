@@ -482,11 +482,8 @@ export default function SettingsScreen() {
             ) : (
                 <View style={{ alignItems: 'center', padding: 20 }}>
                     <Text style={{ color: currentTheme.textSecondary, marginBottom: 15, textAlign: 'center' }}>
-                        Melde dich an, um dein Profil zu bearbeiten und Einstellungen zu speichern.
+                        Nicht angemeldet.
                     </Text>
-                    <TouchableOpacity style={[styles.button, { backgroundColor: Colors.primary, width: '100%' }]} onPress={handleLogin}>
-                        <Text style={styles.buttonText}>Jetzt Anmelden</Text>
-                    </TouchableOpacity>
                 </View>
             )}
           </SettingContainer>
@@ -595,52 +592,6 @@ export default function SettingsScreen() {
           </SettingContainer>
 
           {/* 6. Premium (Entfernt - jetzt oben) */}
-
-          {/* Debugging Section */}
-          <SectionTitle title="System Check & Debugging" icon={Zap} rightIcon={Info} iconColor="#F59E0B" />
-          <SettingContainer>
-            <TouchableOpacity style={styles.actionRow} onPress={handleCheckUserStatus}>
-              <Text style={[styles.actionText, { color: currentTheme.text }]}>Check User Status</Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                 <Text style={{ marginRight: 5, color: currentTheme.textSecondary }}>🔍</Text>
-                 <ChevronRight size={20} color={currentTheme.textSecondary} />
-              </View>
-            </TouchableOpacity>
-            <View style={[styles.divider, { backgroundColor: currentTheme.border }]} />
-
-            <TouchableOpacity style={styles.actionRow} onPress={handleTestConnection}>
-              <Text style={[styles.actionText, { color: currentTheme.text }]}>Test Supabase Connection</Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                 <Text style={{ marginRight: 5, color: currentTheme.textSecondary }}>📡</Text>
-                 <ChevronRight size={20} color={currentTheme.textSecondary} />
-              </View>
-            </TouchableOpacity>
-            <View style={[styles.divider, { backgroundColor: currentTheme.border }]} />
-
-            <TouchableOpacity style={styles.actionRow} onPress={handleTestInsert}>
-               <Text style={[styles.actionText, { color: currentTheme.text }]}>Test DB Insert (Analytics)</Text>
-               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                 <Text style={{ marginRight: 5, color: currentTheme.textSecondary }}>💾</Text>
-                 <ChevronRight size={20} color={currentTheme.textSecondary} />
-              </View>
-            </TouchableOpacity>
-          </SettingContainer>
-
-          {/* 7. Konto */}
-          <SectionTitle title="Konto" icon={LogOut} rightIcon={Key} iconColor="#6b7280" />
-          <SettingContainer>
-            {user ? (
-             <TouchableOpacity style={styles.actionRow} onPress={handleLogout}>
-                <Text style={[styles.actionText, { color: currentTheme.text }]}>Abmelden ({user.email})</Text>
-                <LogOut size={20} color={currentTheme.textSecondary} />
-            </TouchableOpacity>
-            ) : (
-             <TouchableOpacity style={styles.actionRow} onPress={handleLogin} disabled={isLoading}>
-                <Text style={[styles.actionText, { color: currentTheme.text }]}>{isLoading ? 'Lädt...' : 'Login mit Google'}</Text>
-                <ChevronRight size={20} color={currentTheme.textSecondary} />
-            </TouchableOpacity>
-            )}
-          </SettingContainer>
 
           <View style={styles.footer}>
              <Text style={[styles.versionText, { color: currentTheme.textSecondary }]}>App Version: v2.1.0</Text>
