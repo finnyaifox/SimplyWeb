@@ -615,6 +615,7 @@ export default function LandingPage() {
 
                     <Animated.Text entering={FadeInDown.delay(200).duration(1000)} style={[styles.heroTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>
                         <Trans
+                            t={t}
                             i18nKey="landing.hero.title"
                             components={{ 1: <Text style={{ color: Colors.primary }} /> }}
                         />
@@ -763,6 +764,7 @@ export default function LandingPage() {
                 <Animated.View entering={FadeInUp.duration(800)} style={[styles.aboutTextContainer, { padding: 60, backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)', borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }]}>
                     <Text style={[styles.aboutText, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary, fontSize: 24, lineHeight: 36 }]}>
                         <Trans
+                            t={t}
                             i18nKey="landing.about.text1"
                             components={{
                                 1: <Text style={{ fontWeight: 'bold', color: isDark ? Colors.dark.text : Colors.light.text }} />,
@@ -773,6 +775,7 @@ export default function LandingPage() {
                     <View style={{ height: 24 }} />
                     <Text style={[styles.aboutText, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary, fontSize: 24, lineHeight: 36 }]}>
                         <Trans
+                            t={t}
                             i18nKey="landing.about.text2"
                             components={{
                                 1: <Text style={{ fontWeight: 'bold', color: isDark ? Colors.dark.text : Colors.light.text }} />

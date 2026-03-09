@@ -10,6 +10,7 @@ import Svg, { Circle, Path, G, Text as SvgText, Line } from 'react-native-svg';
 import { getDashboardData, getRealDashboardData, DashboardData } from '@/services/databaseService';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useAuth } from '@/context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const { width: windowWidth } = Dimensions.get('window');
 const width = Math.min(windowWidth, 600); // Max width for content container
@@ -296,6 +297,7 @@ export default function InsightsScreen() {
   const theme = isDark ? Colors.dark : Colors.light;
   const router = useRouter();
   const { user, isLoading: authLoading } = useAuth();
+  const { t } = useTranslation();
 
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(false);

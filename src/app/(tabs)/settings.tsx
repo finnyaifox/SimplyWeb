@@ -24,6 +24,7 @@ import { playClickSound } from '@/services/soundService';
 import { deleteAllInsights } from '@/services/databaseService';
 import Slider from '@react-native-community/slider';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import {
   User,
   Clock,
@@ -97,6 +98,7 @@ export default function SettingsScreen() {
   const { ephemeralTime, setEphemeralTime, city, setCity, autoPlayAudioResponse, setAutoPlayAudioResponse } = useSettings();
   const { user, signInWithGoogle, signOut, isLoading } = useAuth();
   const currentTheme = isDark ? Colors.dark : Colors.light;
+  const { t } = useTranslation();
 
   // --- State: Profil ---
   const [username, setUsername] = useState(user?.user_metadata?.full_name || user?.user_metadata?.name || 'Gast');
