@@ -15,6 +15,7 @@ import { scheduleNotification } from '@/services/notificationService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as WebBrowser from 'expo-web-browser';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 const { width: windowWidth } = Dimensions.get('window');
 const contentMaxWidth = 600;
@@ -66,6 +67,7 @@ const DEMO_EVENTS: SectionData[] = [
 ];
 
 export default function SiLiveScreen() {
+  const { t } = useTranslation();
   const { isDark, toggleTheme } = useTheme();
   const { city } = useSettings();
   const { user, isLoading: authLoading } = useAuth();
@@ -120,13 +122,13 @@ export default function SiLiveScreen() {
   const displaySections = eventId
     ? (targetEvent
         ? [{ title: "Event Details", data: [targetEvent], emptyMessage: "" }]
-        : [{ title: "Event Details", data: [], emptyMessage: "Event nicht gefunden oder noch nicht geladen." }]
+        : [{ title: "Event Details", data: [], emptyMessage: t('tabs.silive.eventNotFound') }]
       )
     : [
         ...(savedEvents.length > 0 ? [{
-          title: "Gemerkt",
+          title: t('tabs.silive.saved'),
           data: savedEvents,
-          emptyMessage: "Du hast noch keine Events gemerkt."
+          emptyMessage: t('tabs.silive.noSaved')
         }] : []),
         ...sections
       ];
@@ -148,11 +150,11 @@ export default function SiLiveScreen() {
       if (loading) return;
 
       if (!user) {
-          if (!isAutoLoad) Alert.alert("Nicht eingeloggt", "Bitte logge dich ein, um Empfehlungen zu erhalten.");
+          if (!isAutoLoad) Alert.alert(t('tabs.silive.alerts.notLoggedInTitle'), t('tabs.silive.alerts.notLoggedInMsg'));
           return;
       }
       if (!city) {
-          if (!isAutoLoad) Alert.alert("Stadt fehlt", "Bitte hinterlege deine Stadt in den Einstellungen.");
+          if (!isAutoLoad) Alert.alert(t('tabs.silive.alerts.noCityTitle'), t('tabs.silive.alerts.noCityMsg'));
           return;
       }
 
@@ -493,7 +495,7 @@ export default function SiLiveScreen() {
                             <Ionicons name="search" size={18} color={isDark ? "rgba(255,255,255,0.4)" : "rgba(6, 78, 59, 0.4)"} style={{ marginLeft: 12 }} />
                             <TextInput
                                 style={[styles.searchInput, { color: isDark ? '#fff' : '#064e3b' }]}
-                                placeholder="Was suchst du? (z.B. Party, KI)"
+                                placeholder={t('tabs.silive.searchPlaceholder')}
                                 placeholderTextColor={isDark ? "rgba(255,255,255,0.4)" : "rgba(6, 78, 59, 0.4)"}
                                 value={query}
                                 onChangeText={setQuery}
@@ -532,7 +534,7 @@ export default function SiLiveScreen() {
                         >
                             <Ionicons name="refresh" size={14} color={isDark ? '#34d399' : '#059669'} style={{ marginRight: 6 }} />
                             <Text style={{ color: isDark ? '#34d399' : '#059669', fontSize: 12, fontWeight: '600' }}>
-                                Empfehlungen aktualisieren
+                                {t('tabs.silive.refreshBtn')}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -543,23 +545,23 @@ export default function SiLiveScreen() {
             ListFooterComponent={loading ? (
                 <View style={[styles.centerContent, { marginTop: 20, marginBottom: 40 }]}>
                     <ActivityIndicator size="small" color={isDark ? '#34d399' : '#059669'} />
-                    <Text style={[styles.loadingText, { color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(6, 78, 59, 0.5)' }]}>Suche nach Events...</Text>
+                    <Text style={[styles.loadingText, { color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(6, 78, 59, 0.5)' }]}>{t('tabs.silive.loading')}</Text>
                 </View>
             ) : <View style={{ height: 100 }} />}
             ListEmptyComponent={!loading ? (
                 <View style={styles.centerContent}>
                         {hasSearched ? (
                         <Text style={[styles.emptyText, { color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(6, 78, 59, 0.4)' }]}>
-                            Keine Ergebnisse gefunden.
+                            {t('tabs.silive.noResults')}
                         </Text>
-                        ) : (
+                    ) : (
                         <View style={{ alignItems: 'center' }}>
                             <Ionicons name="sparkles-outline" size={40} color={isDark ? 'rgba(255,255,255,0.15)' : 'rgba(6, 78, 59, 0.15)'} />
                             <Text style={[styles.emptyText, { color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(6, 78, 59, 0.4)' }]}>
-                                Suche nach Events in deiner Nähe.
+                                {t('tabs.silive.searchPrompt')}
                             </Text>
                         </View>
-                        )}
+                    )}
                 </View>
             ) : null}
         />
@@ -594,7 +596,7 @@ export default function SiLiveScreen() {
                     <View style={styles.modalHeaderIcon}>
                         <Ionicons name="notifications" size={24} color={isDark ? '#34d399' : '#059669'} />
                     </View>
-                    <Text style={[styles.modalTitle, { color: isDark ? '#fff' : '#064e3b' }]}>Erinnerung setzen</Text>
+                    <Text style={[styles.modalTitle, { color: isDark ? '#fff' : '#064e3b' }]}>{t('tabs.silive.reminder.title')}</Text>
                     <TouchableOpacity onPress={() => setReminderModalVisible(false)} style={styles.modalCloseBtn}>
                         <Ionicons name="close" size={24} color={isDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.3)'} />
                     </TouchableOpacity>
@@ -611,7 +613,7 @@ export default function SiLiveScreen() {
                 )}
 
                 <View style={styles.modalSection}>
-                    <Text style={[styles.modalSectionTitle, { color: isDark ? 'rgba(255,255,255,0.6)' : '#6b7280' }]}>ART DER ERINNERUNG</Text>
+                    <Text style={[styles.modalSectionTitle, { color: isDark ? 'rgba(255,255,255,0.6)' : '#6b7280' }]}>{t('tabs.silive.reminder.type')}</Text>
                     <View style={styles.optionRow}>
                         <TouchableOpacity 
                             onPress={() => { playClickSound(); setReminderType('push'); }}
@@ -621,7 +623,7 @@ export default function SiLiveScreen() {
                             ]}
                         >
                             <Ionicons name="phone-portrait-outline" size={18} color={reminderType === 'push' ? '#10b981' : isDark ? 'rgba(255,255,255,0.4)' : '#9ca3af'} />
-                            <Text style={[styles.optionBtnText, { color: reminderType === 'push' ? (isDark ? '#34d399' : '#059669') : (isDark ? 'rgba(255,255,255,0.4)' : '#6b7280') }]}>Push</Text>
+                            <Text style={[styles.optionBtnText, { color: reminderType === 'push' ? (isDark ? '#34d399' : '#059669') : (isDark ? 'rgba(255,255,255,0.4)' : '#6b7280') }]}>{t('tabs.silive.reminder.push')}</Text>
                         </TouchableOpacity>
                         
                         <TouchableOpacity 
@@ -632,13 +634,13 @@ export default function SiLiveScreen() {
                             ]}
                         >
                             <Ionicons name="mail-outline" size={18} color={reminderType === 'email' ? '#10b981' : isDark ? 'rgba(255,255,255,0.4)' : '#9ca3af'} />
-                            <Text style={[styles.optionBtnText, { color: reminderType === 'email' ? (isDark ? '#34d399' : '#059669') : (isDark ? 'rgba(255,255,255,0.4)' : '#6b7280') }]}>Email</Text>
+                            <Text style={[styles.optionBtnText, { color: reminderType === 'email' ? (isDark ? '#34d399' : '#059669') : (isDark ? 'rgba(255,255,255,0.4)' : '#6b7280') }]}>{t('tabs.silive.reminder.email')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
 
                 <View style={styles.modalSection}>
-                    <Text style={[styles.modalSectionTitle, { color: isDark ? 'rgba(255,255,255,0.6)' : '#6b7280' }]}>ZEITPUNKT</Text>
+                    <Text style={[styles.modalSectionTitle, { color: isDark ? 'rgba(255,255,255,0.6)' : '#6b7280' }]}>{t('tabs.silive.reminder.time')}</Text>
                     <View style={styles.optionGrid}>
                         {(['1h', '3h', '24h', '2d'] as const).map((time) => (
                             <TouchableOpacity 
@@ -650,7 +652,7 @@ export default function SiLiveScreen() {
                                 ]}
                             >
                                 <Text style={[styles.optionBtnText, { color: reminderTime === time ? (isDark ? '#34d399' : '#059669') : (isDark ? 'rgba(255,255,255,0.4)' : '#6b7280') }]}>
-                                    {time === '1h' ? '1 Std.' : time === '3h' ? '3 Std.' : time === '24h' ? '24 Std.' : '2 Tage'}
+                                    {time === '1h' ? t('tabs.silive.reminder.t1h') : time === '3h' ? t('tabs.silive.reminder.t3h') : time === '24h' ? t('tabs.silive.reminder.t24h') : t('tabs.silive.reminder.t2d')}
                                 </Text>
                             </TouchableOpacity>
                         ))}
@@ -662,7 +664,7 @@ export default function SiLiveScreen() {
                     style={[styles.saveBtn, { backgroundColor: isDark ? '#10B981' : '#059669' }]}
                     activeOpacity={0.8}
                 >
-                    <Text style={styles.saveBtnText}>Speichern</Text>
+                    <Text style={styles.saveBtnText}>{t('tabs.silive.reminder.save')}</Text>
                     <Ionicons name="checkmark-circle" size={20} color="#fff" style={{ marginLeft: 8 }} />
                 </TouchableOpacity>
             </TouchableOpacity>

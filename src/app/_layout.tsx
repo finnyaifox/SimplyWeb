@@ -78,14 +78,18 @@ export default function RootLayout() {
   );
 }
 
+import { LanguageProvider } from '@/context/LanguageContext';
+
 function AuthContextWrapper() {
   return (
-    <AuthProvider>
-      <SettingsProvider>
-        <ThemeProvider>
-          <RootLayoutNav />
-        </ThemeProvider>
-      </SettingsProvider>
-    </AuthProvider>
+    <LanguageProvider>
+      <AuthProvider>
+        <SettingsProvider>
+          <ThemeProvider>
+            <RootLayoutNav />
+          </ThemeProvider>
+        </SettingsProvider>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }

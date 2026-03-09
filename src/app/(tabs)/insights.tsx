@@ -669,7 +669,7 @@ export default function InsightsScreen() {
                   <Ionicons name="bulb" size={26} color={Colors.primary} />
               </View>
               <View style={styles.notificationTextContainer}>
-                  <Text style={[styles.notificationTitle, { color: theme.text }]}>KI-Empfehlung</Text>
+                  <Text style={[styles.notificationTitle, { color: theme.text }]}>{t('tabs.insights.notificationAI')}</Text>
                   <Text style={[styles.notificationBody, { color: theme.textSecondary }]}>{dynamicRecommendation}</Text>
               </View>
           </BlurView>
@@ -679,7 +679,7 @@ export default function InsightsScreen() {
                   <Ionicons name="notifications" size={26} color="#3B82F6" />
               </View>
               <View style={styles.notificationTextContainer}>
-                  <Text style={[styles.notificationTitle, { color: theme.text }]}>Smart-Reminder</Text>
+                  <Text style={[styles.notificationTitle, { color: theme.text }]}>{t('tabs.insights.notificationSmart')}</Text>
                   <Text style={[styles.notificationBody, { color: theme.textSecondary }]}>{dynamicReminder}</Text>
               </View>
           </BlurView>

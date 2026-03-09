@@ -1,0 +1,230 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "pricing": "Pricing",
+    "about": "About Us",
+    "contact": "Contact",
+    "menu": "Menu",
+    "openApp": "Open App",
+    "login": "Sign in",
+    "logout": "Sign out",
+    "loginGoogle": "Sign in with Google",
+    "loginApple": "Sign in with Apple",
+    "loginFacebook": "Sign in with Facebook"
+  },
+  "landing": {
+    "hero": {
+      "badge": "Simply – The future is simple ✨",
+      "title": "Perfect <1>Insights</1> for your life.",
+      "subtitle": "No more chaos. Experience the clarity of intelligent analytics, Ephemeral Chat, and SiLive Voice.",
+      "btnStart": "Start now",
+      "btnLearnMore": "Learn more"
+    },
+    "features": {
+      "title": "Live Smarter",
+      "subtitle": "Features that do more than just work.",
+      "f1": {
+        "title": "Ephemeral Chat",
+        "desc": "Conversations that focus on the essentials. Self-deleting (1-5 min), no history, no chaos."
+      },
+      "f2": {
+        "title": "Deep Insights",
+        "desc": "Understand your patterns with beautifully visualized data and AI analytics."
+      },
+      "f3": {
+        "title": "Simply Voice",
+        "desc": "Speak naturally with your AI. Real-time interaction for maximum productivity."
+      },
+      "f4": {
+        "title": "SiLive Events",
+        "desc": "Discover personalized events in your region (200km) or search specifically for what moves you."
+      },
+      "f5": {
+        "title": "Private & Secure",
+        "desc": "Your thoughts belong to you. We rely on the highest security standards."
+      }
+    },
+    "carousel": {
+      "caption": "Swipe to discover more.",
+      "storeSmallApp": "Download on the",
+      "storeLargeApp": "App Store",
+      "storeSmallPlay": "GET IT ON",
+      "storeLargePlay": "Google Play"
+    },
+    "pricing": {
+      "title": "Choose your plan",
+      "subtitle": "Transparent and fair. No chat storage for maximum privacy.",
+      "popular": "Recommended",
+      "choose": "Choose",
+      "savings": "Savings",
+      "p1": {
+        "title": "Starter",
+        "price": "€0",
+        "period": "/ month",
+        "features": ["Basic Chat (No storage)", "Standard Insights", "Community Support"]
+      },
+      "p2": {
+        "title": "Pro (Monthly)",
+        "price": "€2.90",
+        "period": "/ month",
+        "features": ["Unlimited Chat", "Advanced AI Insights via Supabase", "SiLive Personalized Events", "Priority Support"]
+      },
+      "p3": {
+        "title": "Pro (Yearly)",
+        "price": "€29",
+        "period": "/ year",
+        "features": ["Everything in Pro Monthly", "Best Value", "2 months free", "SiLive Priority"]
+      }
+    },
+    "about": {
+      "title": "The Vision",
+      "subtitle": "Behind the code.",
+      "text1": "<1>Simply</1> is not the product of a giant corporation with thousands of employees. It is the result of a clear vision: Technology should not overwhelm us, but rather give us <2>clarity</2>.",
+      "text2": "As a <1>one-man founder</1>, I develop this app with a passion for details often missed in large teams. Every feature, every animation, and every line of code was written to help you regain focus in a noisy world.",
+      "role": "Founder & Developer"
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "Do you have questions, feedback, or simply a good idea? Write to me directly."
+    },
+    "footer": {
+      "tagline": "Intelligence made simple.",
+      "about": "About Us",
+      "privacy": "Privacy",
+      "imprint": "Imprint",
+      "terms": "Terms",
+      "contact": "Contact"
+    }
+  },
+  "tabs": {
+    "home": {
+      "title": "Questions don't stay. Clarity does.",
+      "subtitle": "No chat history. No data chaos.",
+      "processing": "Processing...",
+      "insightsActivate": "Activate Insights",
+      "patternsRecognize": "Recognize patterns",
+      "insightsDemo": "View Insights Dashboard Demo",
+      "newBadge": "NEW",
+      "alerts": {
+        "micPermissionTitle": "Permission missing",
+        "micPermissionMsg": "Please allow access to the microphone.",
+        "errorTitle": "Error",
+        "audioErrorMsg": "Could not process audio.",
+        "audioProcessingErrorMsg": "Error processing audio.",
+        "audioPlayErrorMsg": "Could not play audio.",
+        "speechErrorMsg": "Error during speech output."
+      }
+    },
+    "insights": {
+      "headerTitle": "Simply Insights",
+      "demo": "DEMO",
+      "btnRefresh": "Refresh data",
+      "btnLoading": "Loading data...",
+      "catCategories": "Categories",
+      "catHistory": "History",
+      "catTopCategories": "Top Categories Focus",
+      "catHeatmap": "Activity Heatmap",
+      "catSentiment": "Sentiment Analysis",
+      "catTopKeywords": "Top 15 Keywords",
+      "catKeywordRelevance": "Keyword Relevance",
+      "noData": "No data",
+      "noKeywords": "No keywords",
+      "noCategories": "No categories available",
+      "detailsTap": "Details by tapping the bars",
+      "notificationAI": "AI Recommendation",
+      "notificationSmart": "Smart Reminder",
+      "alerts": {
+        "hint": "Hint",
+        "noInsights": "No new insights found.",
+        "slowConnection": "Connection is slow. Try again later.",
+        "dataError": "Data could not be updated."
+      }
+    },
+    "settings": {
+      "headerTitle": "Settings",
+      "guest": "Guest",
+      "sections": {
+        "profile": "Profile",
+        "ephemeralChat": "Ephemeral Chat",
+        "insights": "Insights",
+        "notifications": "Notifications",
+        "dataSecurity": "Data & Security",
+        "debugging": "System Check & Debugging",
+        "account": "Account"
+      },
+      "profile": {
+        "country": "Country",
+        "city": "City (for SiLive Events)",
+        "loginPrompt": "Sign in to edit your profile and save settings.",
+        "loginBtn": "Sign in now"
+      },
+      "ephemeral": {
+        "deleteAfter": "Automatically delete messages after:",
+        "min1": "1 Minute",
+        "min3": "3 Minutes (Default)",
+        "min5": "5 Minutes",
+        "autoPlay": "Auto-Play Audio Response"
+      },
+      "insightsSettings": {
+        "dashboard": "Analytics Dashboard",
+        "autoCategory": "Auto-Categorization",
+        "keywordTrack": "Keyword Tracking",
+        "sentiment": "Sentiment Analysis",
+        "notifications": "Insights Notifications",
+        "autoDelete": "Auto delete",
+        "deleteAfter": "Delete insights after:",
+        "days": "Days"
+      },
+      "notificationsSettings": {
+        "weekly": "Weekly Summary",
+        "aiReminders": "AI Reminders"
+      },
+      "dataSecuritySettings": {
+        "download": "Download Insights",
+        "deleteAll": "Delete all Insights",
+        "whatWeSave": "What do we save?",
+        "privacy": "Privacy Policy"
+      },
+      "accountSettings": {
+        "logout": "Sign out",
+        "loginGoogle": "Sign in with Google",
+        "loading": "Loading..."
+      },
+      "modal": {
+        "title": "What do we save?",
+        "text": "We store your profile information (Username, Email) locally on your device.\n\nYour chat histories are \"Ephemeral\" and are deleted by default after the set time.\n\nInsights data is analyzed locally and stored for the selected period to show you statistics. No upload to external servers occurs without your consent.",
+        "understood": "Understood"
+      },
+      "version": "App Version: v2.1.0"
+    },
+    "silive": {
+      "searchPlaceholder": "Search events, categories or places...",
+      "refreshBtn": "Refresh recommendations",
+      "loading": "Searching for events...",
+      "noResults": "No results found.",
+      "searchPrompt": "Search for events near you.",
+      "eventNotFound": "Event not found or not yet loaded.",
+      "saved": "Saved",
+      "noSaved": "You have not saved any events yet.",
+      "reminder": {
+        "title": "Set reminder",
+        "type": "REMINDER TYPE",
+        "push": "Push",
+        "email": "Email",
+        "time": "TIME",
+        "t1h": "1 hr",
+        "t3h": "3 hrs",
+        "t24h": "24 hrs",
+        "t2d": "2 days",
+        "save": "Save"
+      },
+      "alerts": {
+        "notLoggedInTitle": "Not logged in",
+        "notLoggedInMsg": "Please log in to receive recommendations.",
+        "noCityTitle": "City missing",
+        "noCityMsg": "Please enter your city in the settings."
+      }
+    }
+  }
+}

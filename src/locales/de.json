@@ -1,0 +1,230 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "features": "Funktionen",
+    "pricing": "Preise",
+    "about": "Über Uns",
+    "contact": "Kontakt",
+    "menu": "Menü",
+    "openApp": "App öffnen",
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "loginGoogle": "Mit Google anmelden",
+    "loginApple": "Mit Apple anmelden",
+    "loginFacebook": "Mit Facebook anmelden"
+  },
+  "landing": {
+    "hero": {
+      "badge": "Simply – Die Zukunft ist einfach ✨",
+      "title": "Perfekte <1>Insights</1> für dein Leben.",
+      "subtitle": "Kein Chaos mehr. Erlebe die Klarheit von intelligenten Analysen, Ephemeral Chat und SiLive Voice.",
+      "btnStart": "Jetzt starten",
+      "btnLearnMore": "Mehr erfahren"
+    },
+    "features": {
+      "title": "Smarter Leben",
+      "subtitle": "Funktionen, die mehr können als nur funktionieren.",
+      "f1": {
+        "title": "Ephemeral Chat",
+        "desc": "Gespräche, die sich auf das Wesentliche konzentrieren. Selbstlöschend (1-5 Min), kein Verlauf, kein Chaos."
+      },
+      "f2": {
+        "title": "Deep Insights",
+        "desc": "Verstehe deine Muster mit wunderschön visualisierten Daten und KI-Analysen."
+      },
+      "f3": {
+        "title": "Simply Voice",
+        "desc": "Sprich natürlich mit deiner KI. Echtzeit-Interaktion für maximale Produktivität."
+      },
+      "f4": {
+        "title": "SiLive Events",
+        "desc": "Entdecke personalisierte Events in deiner Region (200km) oder suche gezielt nach dem, was dich bewegt."
+      },
+      "f5": {
+        "title": "Privat & Sicher",
+        "desc": "Deine Gedanken gehören dir. Wir setzen auf höchste Sicherheitsstandards."
+      }
+    },
+    "carousel": {
+      "caption": "Wische, um mehr zu entdecken.",
+      "storeSmallApp": "Laden im",
+      "storeLargeApp": "App Store",
+      "storeSmallPlay": "JETZT BEI",
+      "storeLargePlay": "Google Play"
+    },
+    "pricing": {
+      "title": "Wähle deinen Plan",
+      "subtitle": "Transparent und fair. Keine Chat-Speicherung für maximale Privatsphäre.",
+      "popular": "Empfohlen",
+      "choose": "Wählen",
+      "savings": "Sparvorteil",
+      "p1": {
+        "title": "Starter",
+        "price": "0€",
+        "period": "/ Monat",
+        "features": ["Basis Chat (Keine Speicherung)", "Standard Insights", "Community Support"]
+      },
+      "p2": {
+        "title": "Pro (Monatlich)",
+        "price": "2,90€",
+        "period": "/ Monat",
+        "features": ["Unbegrenzter Chat", "Advanced AI Insights via Supabase", "SiLive Personalisierte Events", "Priority Support"]
+      },
+      "p3": {
+        "title": "Pro (Jährlich)",
+        "price": "29€",
+        "period": "/ Jahr",
+        "features": ["Alles aus Pro Monatlich", "Bester Preis", "2 Monate geschenkt", "SiLive Priority"]
+      }
+    },
+    "about": {
+      "title": "Die Vision",
+      "subtitle": "Hinter dem Code.",
+      "text1": "<1>Simply</1> ist nicht das Produkt einer riesigen Corporation mit tausenden von Mitarbeitern. Es ist das Ergebnis einer klaren Vision: Technologie sollte uns nicht überwältigen, sondern uns <2>Klarheit</2> schenken.",
+      "text2": "Als <1>One-Man-Gründer</1> entwickle ich diese App mit einer Leidenschaft für Details, die man in großen Teams oft vermisst. Jedes Feature, jede Animation und jede Zeile Code wurde geschrieben, um dir zu helfen, den Fokus in einer lauten Welt zurückzugewinnen.",
+      "role": "Gründer & Entwickler"
+    },
+    "contact": {
+      "title": "Kontakt",
+      "subtitle": "Hast du Fragen, Feedback oder einfach eine gute Idee? Schreib mir direkt."
+    },
+    "footer": {
+      "tagline": "Intelligence made simple.",
+      "about": "Über uns",
+      "privacy": "Datenschutz",
+      "imprint": "Impressum",
+      "terms": "AGB",
+      "contact": "Kontakt"
+    }
+  },
+  "tabs": {
+    "home": {
+      "title": "Fragen bleiben nicht. Klarheit schon.",
+      "subtitle": "Kein Chat Verlauf. Kein Daten Chaos.",
+      "processing": "Verarbeite...",
+      "insightsActivate": "Insights Aktivieren",
+      "patternsRecognize": "Muster erkennen",
+      "insightsDemo": "Insights Dashboard Demo anschauen",
+      "newBadge": "NEW",
+      "alerts": {
+        "micPermissionTitle": "Berechtigung fehlt",
+        "micPermissionMsg": "Bitte erlaube Zugriff auf das Mikrofon.",
+        "errorTitle": "Fehler",
+        "audioErrorMsg": "Konnte Audio nicht verarbeiten.",
+        "audioProcessingErrorMsg": "Fehler bei der Audio-Verarbeitung.",
+        "audioPlayErrorMsg": "Konnte Audio nicht abspielen.",
+        "speechErrorMsg": "Fehler bei der Sprachausgabe."
+      }
+    },
+    "insights": {
+      "headerTitle": "Simply Insights",
+      "demo": "DEMO",
+      "btnRefresh": "Daten aktualisieren",
+      "btnLoading": "Lade Daten...",
+      "catCategories": "Kategorien",
+      "catHistory": "Verlauf",
+      "catTopCategories": "Top Kategorien Fokus",
+      "catHeatmap": "Aktivitäts-Heatmap",
+      "catSentiment": "Stimmungs-Analyse",
+      "catTopKeywords": "Top 15 Keywords",
+      "catKeywordRelevance": "Keyword Relevanz",
+      "noData": "Keine Daten",
+      "noKeywords": "Keine Keywords",
+      "noCategories": "Keine Kategorien verfügbar",
+      "detailsTap": "Details durch Tippen auf die Balken",
+      "notificationAI": "KI-Empfehlung",
+      "notificationSmart": "Smart-Reminder",
+      "alerts": {
+        "hint": "Hinweis",
+        "noInsights": "Keine neuen Insights gefunden.",
+        "slowConnection": "Die Verbindung ist langsam. Versuche es später erneut.",
+        "dataError": "Daten konnten nicht aktualisiert werden."
+      }
+    },
+    "settings": {
+      "headerTitle": "Einstellungen",
+      "guest": "Gast",
+      "sections": {
+        "profile": "Profil",
+        "ephemeralChat": "Ephemeral Chat",
+        "insights": "Insights",
+        "notifications": "Benachrichtigungen",
+        "dataSecurity": "Daten & Sicherheit",
+        "debugging": "System Check & Debugging",
+        "account": "Konto"
+      },
+      "profile": {
+        "country": "Land",
+        "city": "Stadt (für SiLive Events)",
+        "loginPrompt": "Melde dich an, um dein Profil zu bearbeiten und Einstellungen zu speichern.",
+        "loginBtn": "Jetzt Anmelden"
+      },
+      "ephemeral": {
+        "deleteAfter": "Nachrichten automatisch löschen nach:",
+        "min1": "1 Minute",
+        "min3": "3 Minuten (Standard)",
+        "min5": "5 Minuten",
+        "autoPlay": "Auto-Play Audio Antwort"
+      },
+      "insightsSettings": {
+        "dashboard": "Analytics Dashboard",
+        "autoCategory": "Auto-Kategorisierung",
+        "keywordTrack": "Keyword Tracking",
+        "sentiment": "Sentiment Analyse",
+        "notifications": "Insights Mitteilungen",
+        "autoDelete": "Automatisch löschen",
+        "deleteAfter": "Insights löschen nach:",
+        "days": "Tage"
+      },
+      "notificationsSettings": {
+        "weekly": "Wöchentliche Zusammenfassung",
+        "aiReminders": "KI Erinnerungen"
+      },
+      "dataSecuritySettings": {
+        "download": "Insights herunterladen",
+        "deleteAll": "Insights komplett löschen",
+        "whatWeSave": "Was speichern wir?",
+        "privacy": "Datenschutz"
+      },
+      "accountSettings": {
+        "logout": "Abmelden",
+        "loginGoogle": "Login mit Google",
+        "loading": "Lädt..."
+      },
+      "modal": {
+        "title": "Was speichern wir?",
+        "text": "Wir speichern deine Profilinformationen (Username, Email) lokal auf deinem Gerät.\n\nDeine Chat-Verläufe sind \"Ephemeral\" und werden standardmäßig nach der eingestellten Zeit gelöscht.\n\nInsights-Daten werden lokal analysiert und für den gewählten Zeitraum gespeichert, um dir Statistiken anzuzeigen. Es erfolgt kein Upload auf externe Server ohne deine Zustimmung.",
+        "understood": "Verstanden"
+      },
+      "version": "App Version: v2.1.0"
+    },
+    "silive": {
+      "searchPlaceholder": "Events, Kategorien oder Orte suchen...",
+      "refreshBtn": "Empfehlungen aktualisieren",
+      "loading": "Suche nach Events...",
+      "noResults": "Keine Ergebnisse gefunden.",
+      "searchPrompt": "Suche nach Events in deiner Nähe.",
+      "eventNotFound": "Event nicht gefunden oder noch nicht geladen.",
+      "saved": "Gemerkt",
+      "noSaved": "Du hast noch keine Events gemerkt.",
+      "reminder": {
+        "title": "Erinnerung setzen",
+        "type": "ART DER ERINNERUNG",
+        "push": "Push",
+        "email": "Email",
+        "time": "ZEITPUNKT",
+        "t1h": "1 Std.",
+        "t3h": "3 Std.",
+        "t24h": "24 Std.",
+        "t2d": "2 Tage",
+        "save": "Speichern"
+      },
+      "alerts": {
+        "notLoggedInTitle": "Nicht eingeloggt",
+        "notLoggedInMsg": "Bitte logge dich ein, um Empfehlungen zu erhalten.",
+        "noCityTitle": "Stadt fehlt",
+        "noCityMsg": "Bitte hinterlege deine Stadt in den Einstellungen."
+      }
+    }
+  }
+}

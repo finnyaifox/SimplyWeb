@@ -7,12 +7,16 @@ import { useRouter, usePathname } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useAuth } from '@/context/AuthContext';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '@/context/LanguageContext';
 
 const logoLight = require('@/assets/images/logo_header_light.png');
 const logoDark = require('@/assets/images/logo_header_dark.png');
 const { width: windowWidth } = Dimensions.get('window');
 
 export default function WebNavBar() {
+  const { t } = useTranslation();
+  const { language, setLanguage } = useLanguage();
   const { user, signInWithGoogle, signOut } = useAuth();
   const { toggleMasterTheme, webTheme } = useTheme(); // useTheme destructuring corrected based on context usage
   const webColorScheme = useWebColorScheme();
@@ -99,11 +103,11 @@ export default function WebNavBar() {
   };
 
   const navItems = [
-  { label: 'Startseite', id: 'hero' },
-  { label: 'Funktionen', id: 'features' },
-  { label: 'Preise', id: 'preise' },
-  { label: 'Über Uns', id: 'vision' },
-  { label: 'Kontakt', id: 'kontakt' }
+  { label: t('nav.home'), id: 'hero' },
+  { label: t('nav.features'), id: 'features' },
+  { label: t('nav.pricing'), id: 'preise' },
+  { label: t('nav.about'), id: 'vision' },
+  { label: t('nav.contact'), id: 'kontakt' }
 ];
 
   return (
@@ -161,6 +165,9 @@ export default function WebNavBar() {
             {/* Right Side Actions */}
             <View style={styles.actions} zIndex={30}>
                 
+                {/* Language Toggle Button */}
+                <LanguageToggle language={language} setLanguage={setLanguage} isDark={isDark} />
+
                 {/* Theme Toggle Button */}
                 <ThemeToggle isDark={isDark} toggleTheme={toggleMasterTheme} />
 
@@ -172,7 +179,7 @@ export default function WebNavBar() {
                             onPress={() => router.push('/(tabs)')}
                         >
                             <Text style={[styles.secondaryBtnText, { color: isDark ? 'white' : 'black' }]}>
-                                App öffnen
+                                {t('nav.openApp')}
                             </Text>
                         </TouchableOpacity>
 
@@ -182,7 +189,7 @@ export default function WebNavBar() {
                                 style={[styles.ctaBtn, { backgroundColor: Colors.primary }]}
                                 onPress={() => signOut()}
                             >
-                                <Text style={styles.ctaText}>Abmelden</Text>
+                                <Text style={styles.ctaText}>{t('nav.logout')}</Text>
                             </TouchableOpacity>
                         ) : (
                             <View style={{ position: 'relative', zIndex: 40 }}>
@@ -190,7 +197,7 @@ export default function WebNavBar() {
                                     style={[styles.ctaBtn, { backgroundColor: Colors.primary }]}
                                     onPress={() => setIsLoginPopoverVisible(!isLoginPopoverVisible)}
                                 >
-                                    <Text style={styles.ctaText}>Anmelden</Text>
+                                    <Text style={styles.ctaText}>{t('nav.login')}</Text>
                                 </TouchableOpacity>
 
                                 {isLoginPopoverVisible && (
@@ -216,17 +223,17 @@ export default function WebNavBar() {
                                             
                                             <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]} onPress={() => { signInWithGoogle(); setIsLoginPopoverVisible(false); }}>
                                                 <Ionicons name="logo-google" size={20} color={isDark ? "white" : "black"} style={{ marginRight: 10 }} />
-                                                <Text style={[styles.authBtnText, { color: isDark ? 'white' : 'black' }]}>Mit Google anmelden</Text>
+                                                <Text style={[styles.authBtnText, { color: isDark ? 'white' : 'black' }]}>{t('nav.loginGoogle')}</Text>
                                             </TouchableOpacity>
 
                                             <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]}>
                                                 <Ionicons name="logo-apple" size={20} color={isDark ? "white" : "black"} style={{ marginRight: 10 }} />
-                                                <Text style={[styles.authBtnText, { color: isDark ? 'white' : 'black' }]}>Mit Apple anmelden</Text>
+                                                <Text style={[styles.authBtnText, { color: isDark ? 'white' : 'black' }]}>{t('nav.loginApple')}</Text>
                                             </TouchableOpacity>
 
                                             <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]}>
                                                 <Ionicons name="logo-facebook" size={20} color={isDark ? "white" : "#1877F2"} style={{ marginRight: 10 }} />
-                                                <Text style={[styles.authBtnText, { color: isDark ? 'white' : 'black' }]}>Mit Facebook anmelden</Text>
+                                                <Text style={[styles.authBtnText, { color: isDark ? 'white' : 'black' }]}>{t('nav.loginFacebook')}</Text>
                                             </TouchableOpacity>
                                         </Animated.View>
                                     </>
@@ -285,7 +292,7 @@ export default function WebNavBar() {
 
                     <ScrollView style={styles.mobileScroll}>
                          <View style={styles.mobileSection}>
-                            <Text style={[styles.mobileSectionTitle, { color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)' }]}>Menü</Text>
+                            <Text style={[styles.mobileSectionTitle, { color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)' }]}>{t('nav.menu')}</Text>
                             {navItems.map((item) => (
                                 <TouchableOpacity
                                     key={item.id}
@@ -307,7 +314,7 @@ export default function WebNavBar() {
                                 handleLoginAction();
                             }}
                         >
-                            <Text style={styles.ctaText}>{user ? 'App öffnen' : 'Anmelden'}</Text>
+                            <Text style={styles.ctaText}>{user ? t('nav.openApp') : t('nav.login')}</Text>
                             <Ionicons name="arrow-forward" size={16} color="white" style={{marginLeft: 4}} />
                         </TouchableOpacity>
 
@@ -332,6 +339,19 @@ const ThemeToggle = ({ isDark, toggleTheme }: { isDark: boolean, toggleTheme: ()
                 size={20}
                 color={isDark ? "#FDB813" : Colors.primary}
             />
+        </TouchableOpacity>
+    );
+};
+
+const LanguageToggle = ({ language, setLanguage, isDark }: { language: string, setLanguage: (lang: string) => void, isDark: boolean }) => {
+    return (
+        <TouchableOpacity
+            onPress={() => setLanguage(language === 'de' ? 'en' : 'de')}
+            style={[styles.themeToggle, { backgroundColor: 'rgba(255,255,255,0.1)' }]}
+        >
+            <Text style={{ color: isDark ? 'white' : Colors.primary, fontWeight: 'bold', fontSize: 14 }}>
+                {language.toUpperCase()}
+            </Text>
         </TouchableOpacity>
     );
 };

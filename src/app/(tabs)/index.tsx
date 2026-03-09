@@ -11,6 +11,7 @@ import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Alert, Animated, Dimensions, Easing, Image, Keyboard, KeyboardAvoidingView, Platform, Share, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { FlatList, Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Reanimated, { Extrapolation, interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
@@ -72,6 +73,7 @@ const EphemeralTimer = React.memo(({ timestamp, durationMinutes, isUser, isDark 
 });
 
 export default function ChatScreen() {
+  const { t } = useTranslation();
   const { theme: contextTheme, isDark } = useTheme();
   const { user } = useAuth();
   const { autoPlayAudioResponse, ephemeralTime } = useSettings();
@@ -241,7 +243,7 @@ export default function ChatScreen() {
         setRecording(recording);
         setIsRecording(true);
       } else {
-        Alert.alert("Berechtigung fehlt", "Bitte erlaube Zugriff auf das Mikrofon.");
+        Alert.alert(t('tabs.home.alerts.micPermissionTitle'), t('tabs.home.alerts.micPermissionMsg'));
       }
     } catch (err) {
       console.error('Failed to start recording', err);
@@ -304,7 +306,7 @@ export default function ChatScreen() {
                         }
                     } catch (err) {
                         console.error("Transcription Error:", err);
-                        addMessage("Fehler bei der Audio-Verarbeitung.", 'ai');
+                        addMessage(t('tabs.home.alerts.audioProcessingErrorMsg'), 'ai');
                     } finally {
                         setIsProcessingAudio(false);
                         isStoppingRef.current = false;
@@ -322,7 +324,7 @@ export default function ChatScreen() {
         console.error("Error processing audio:", error);
         setIsProcessingAudio(false);
         isStoppingRef.current = false;
-        Alert.alert("Fehler", "Konnte Audio nicht verarbeiten.");
+        Alert.alert(t('tabs.home.alerts.errorTitle'), t('tabs.home.alerts.audioErrorMsg'));
     }
   }
 
@@ -602,7 +604,7 @@ export default function ChatScreen() {
              // Fallback falls TTS fehlschlägt
              setIsSpeaking(false);
              setSpeakingMessageId(null);
-             Alert.alert("Fehler", "Konnte Audio nicht abspielen.");
+             Alert.alert(t('tabs.home.alerts.errorTitle'), t('tabs.home.alerts.audioPlayErrorMsg'));
         }
 
     } catch (error) {
@@ -610,7 +612,7 @@ export default function ChatScreen() {
         setLoadingAudioMessageId(null);
         setIsSpeaking(false);
         setSpeakingMessageId(null);
-        Alert.alert("Fehler", "Fehler bei der Sprachausgabe.");
+        Alert.alert(t('tabs.home.alerts.errorTitle'), t('tabs.home.alerts.speechErrorMsg'));
     }
   };
 
@@ -746,7 +748,7 @@ export default function ChatScreen() {
           {/* Status Text for Processing */}
           {isProcessingAudio && (
               <View style={{ position: 'absolute', bottom: -30 }}>
-                  <Text style={{ color: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)', fontSize: 12 }}>Verarbeite...</Text>
+                  <Text style={{ color: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)', fontSize: 12 }}>{t('tabs.home.processing')}</Text>
               </View>
           )}
 
@@ -955,11 +957,11 @@ export default function ChatScreen() {
               <Reanimated.View style={[styles.headerTextContainer, headerAnimatedStyle, { marginTop: 80 }]}>
                   {/* marginTop -40 statt -50 -> "minimal tiefer" (weniger negativ = weiter unten) */}
                   <Text style={[styles.headerTitle, { color: isDark ? '#ECFDF5' : '#2D2A26', marginTop: 0 }]} numberOfLines={1} adjustsFontSizeToFit>
-                      Fragen bleiben nicht. Klarheit schon.
+                      {t('tabs.home.title')}
                   </Text>
                   {/* Untertitel tiefer (Abstand vergrößern) */}
                   <Text style={[styles.headerSubtitle, { color: isDark ? '#6EE7B7' : '#8C7B68', marginTop: 15 }]}>
-                      Kein Chat Verlauf. Kein Daten Chaos.
+                      {t('tabs.home.subtitle')}
                   </Text>
               </Reanimated.View>
               {/* Focus Small Mic - REMOVED */}
@@ -1134,13 +1136,13 @@ export default function ChatScreen() {
                     >
                         <View style={[styles.bannerTextContainer, { flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }]}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={[styles.bannerTitle, { color: '#fff', fontSize: 13, marginRight: 8 }]}>Insights Aktivieren</Text>
+                                <Text style={[styles.bannerTitle, { color: '#fff', fontSize: 13, marginRight: 8 }]}>{t('tabs.home.insightsActivate')}</Text>
                                 <Animated.View style={{ transform: [{ translateX: arrowAnim }] }}>
                                     <Ionicons name="arrow-forward" size={14} color={'#34d399'} style={{ marginRight: 8 }} />
                                 </Animated.View>
-                                <Text style={[styles.bannerTitle, { color: '#fff', fontSize: 13 }]}>Muster erkennen</Text>
+                                <Text style={[styles.bannerTitle, { color: '#fff', fontSize: 13 }]}>{t('tabs.home.patternsRecognize')}</Text>
                             </View>
-                            <Text style={{color: 'rgba(255,255,255,0.7)', fontSize: 10, marginTop: 2, fontWeight: '500' }}>Insights Dashboard Demo anschauen</Text>
+                            <Text style={{color: 'rgba(255,255,255,0.7)', fontSize: 10, marginTop: 2, fontWeight: '500' }}>{t('tabs.home.insightsDemo')}</Text>
                         </View>
                         
                         {/* NEW Badge */}
@@ -1150,7 +1152,7 @@ export default function ChatScreen() {
                             end={{ x: 1, y: 1 }}
                             style={[styles.badge, { right: 8, bottom: 8, top: undefined, opacity: 0.8, transform: [{scale: 0.85}] }]}
                         >
-                            <Text style={styles.badgeText}>NEW</Text>
+                            <Text style={styles.badgeText}>{t('tabs.home.newBadge')}</Text>
                         </LinearGradient>
                     </LinearGradient>
                 </TouchableOpacity>

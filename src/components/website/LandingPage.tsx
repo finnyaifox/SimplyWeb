@@ -26,6 +26,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { BlurView } from 'expo-blur';
 import { PhoneFrameWrapper } from './PhoneFrameWrapper';
+import { useTranslation, Trans } from 'react-i18next';
 
 const { width, height } = Dimensions.get('window');
 
@@ -296,7 +297,7 @@ const FeatureCard = ({ icon, title, desc, delay, isDark }: any) => {
     );
 };
 
-const PricingCard = ({ title, price, period, features, isPopular, isDark, index, priceSubtitle }: any) => {
+const PricingCard = ({ title, price, period, features, isPopular, isDark, index, priceSubtitle, popularText, chooseText }: any) => {
     // Stärkere Hervorhebung für Popular Card (1.1 Scale)
     const scale = useSharedValue(isPopular ? 1.1 : 1);
     const translateY = useSharedValue(isPopular ? -10 : 0); // Leicht angehoben
@@ -345,7 +346,7 @@ const PricingCard = ({ title, price, period, features, isPopular, isDark, index,
         >
             {isPopular && (
                 <View style={styles.popularBadge}>
-                <Text style={styles.popularText}>Empfohlen</Text>
+                <Text style={styles.popularText}>{popularText || 'Empfohlen'}</Text>
                 </View>
             )}
             <Text style={[styles.pricingTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>{title}</Text>
@@ -366,7 +367,7 @@ const PricingCard = ({ title, price, period, features, isPopular, isDark, index,
                 ))}
             </View>
             <TouchableOpacity style={[styles.pricingBtn, { backgroundColor: isPopular ? Colors.primary : 'transparent', borderWidth: 1, borderColor: Colors.primary }]}>
-                <Text style={[styles.pricingBtnText, { color: isPopular ? 'white' : Colors.primary }]}>Wählen</Text>
+                <Text style={[styles.pricingBtnText, { color: isPopular ? 'white' : Colors.primary }]}>{chooseText || 'Wählen'}</Text>
             </TouchableOpacity>
         </Animated.View>
     );
@@ -377,6 +378,7 @@ const ImageCarousel = ({ isDark }: { isDark: boolean }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const { width } = useWindowDimensions();
     const isMobile = width < 768;
+    const { t } = useTranslation();
 
     const images = [
         require('@/assets/images/smarter-leben/slide1.jpg'),
@@ -511,7 +513,7 @@ const ImageCarousel = ({ isDark }: { isDark: boolean }) => {
 
              {/* Description Text */}
              <Text style={[styles.carouselCaption, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
-                Wische, um mehr zu entdecken.
+                {t('landing.carousel.caption')}
              </Text>
 
              {/* DOWNLOAD SECTION */}
@@ -519,15 +521,15 @@ const ImageCarousel = ({ isDark }: { isDark: boolean }) => {
                 <TouchableOpacity style={[styles.storeBtn, { backgroundColor: isDark ? 'black' : 'black' }]}>
                     <Ionicons name="logo-apple" size={32} color="white" />
                     <View>
-                        <Text style={styles.storeSmallText}>Laden im</Text>
-                        <Text style={styles.storeLargeText}>App Store</Text>
+                        <Text style={styles.storeSmallText}>{t('landing.carousel.storeSmallApp')}</Text>
+                        <Text style={styles.storeLargeText}>{t('landing.carousel.storeLargeApp')}</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.storeBtn, { backgroundColor: isDark ? 'black' : 'black' }]}>
                     <Ionicons name="logo-google-playstore" size={28} color="white" />
                     <View>
-                        <Text style={styles.storeSmallText}>JETZT BEI</Text>
-                        <Text style={styles.storeLargeText}>Google Play</Text>
+                        <Text style={styles.storeSmallText}>{t('landing.carousel.storeSmallPlay')}</Text>
+                        <Text style={styles.storeLargeText}>{t('landing.carousel.storeLargePlay')}</Text>
                     </View>
                 </TouchableOpacity>
              </View>
@@ -567,6 +569,7 @@ export default function LandingPage() {
   const isDark = theme === 'dark';
   const router = useRouter();
   const [isYearly, setIsYearly] = useState(false);
+  const { t } = useTranslation();
 
   const startApp = () => {
     router.push('/(tabs)');
@@ -607,24 +610,27 @@ export default function LandingPage() {
                 {/* Left: Content */}
                 <View style={styles.heroContent}>
                     <Animated.View entering={FadeInDown.duration(1000)} style={styles.heroBadge}>
-                        <Text style={styles.heroBadgeText}>Simply – Die Zukunft ist einfach ✨</Text>
+                        <Text style={styles.heroBadgeText}>{t('landing.hero.badge')}</Text>
                     </Animated.View>
 
                     <Animated.Text entering={FadeInDown.delay(200).duration(1000)} style={[styles.heroTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>
-                        Perfekte <Text style={{ color: Colors.primary }}>Insights</Text> für dein Leben.
+                        <Trans
+                            i18nKey="landing.hero.title"
+                            components={{ 1: <Text style={{ color: Colors.primary }} /> }}
+                        />
                     </Animated.Text>
 
                     <Animated.Text entering={FadeInDown.delay(400).duration(1000)} style={[styles.heroSubtitle, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
-                        Kein Chaos mehr. Erlebe die Klarheit von intelligenten Analysen, Ephemeral Chat und SiLive Voice.
+                        {t('landing.hero.subtitle')}
                     </Animated.Text>
 
                     <Animated.View entering={FadeInDown.delay(600).duration(1000)} style={styles.heroButtons}>
                         <TouchableOpacity onPress={startApp} style={[styles.primaryBtn, { backgroundColor: Colors.primary, shadowColor: Colors.primary }]}>
-                            <Text style={styles.primaryBtnText}>Jetzt starten</Text>
+                            <Text style={styles.primaryBtnText}>{t('landing.hero.btnStart')}</Text>
                             <Ionicons name="arrow-forward" size={20} color="white" />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => scrollToSection('features')} style={[styles.secondaryBtn, { borderColor: isDark ? Colors.dark.border : Colors.light.border }]}>
-                            <Text style={[styles.secondaryBtnText, { color: isDark ? Colors.dark.text : Colors.light.text }]}>Mehr erfahren</Text>
+                            <Text style={[styles.secondaryBtnText, { color: isDark ? Colors.dark.text : Colors.light.text }]}>{t('landing.hero.btnLearnMore')}</Text>
                         </TouchableOpacity>
                     </Animated.View>
                 </View>
@@ -649,8 +655,8 @@ export default function LandingPage() {
             {/* --- FEATURES GRID --- */}
             <View style={[styles.sectionContainer, { paddingTop: 180, paddingBottom: 140 }]}>
                 <SectionTitle
-                    title="Smarter Leben"
-                    subtitle="Funktionen, die mehr können als nur funktionieren."
+                    title={t('landing.features.title')}
+                    subtitle={t('landing.features.subtitle')}
                     isDark={isDark}
                 />
             
@@ -658,28 +664,28 @@ export default function LandingPage() {
                 {[
                     {
                         icon: "chatbubble-ellipses",
-                        title: "Ephemeral Chat",
-                        desc: "Gespräche, die sich auf das Wesentliche konzentrieren. Selbstlöschend (1-5 Min), kein Verlauf, kein Chaos."
+                        title: t('landing.features.f1.title'),
+                        desc: t('landing.features.f1.desc')
                     },
                     {
                         icon: "stats-chart",
-                        title: "Deep Insights",
-                        desc: "Verstehe deine Muster mit wunderschön visualisierten Daten und KI-Analysen."
+                        title: t('landing.features.f2.title'),
+                        desc: t('landing.features.f2.desc')
                     },
                     {
                         icon: "mic",
-                        title: "Simply Voice",
-                        desc: "Sprich natürlich mit deiner KI. Echtzeit-Interaktion für maximale Produktivität."
+                        title: t('landing.features.f3.title'),
+                        desc: t('landing.features.f3.desc')
                     },
                     {
                         icon: "calendar",
-                        title: "SiLive Events",
-                        desc: "Entdecke personalisierte Events in deiner Region (200km) oder suche gezielt nach dem, was dich bewegt."
+                        title: t('landing.features.f4.title'),
+                        desc: t('landing.features.f4.desc')
                     },
                     {
                         icon: "shield-checkmark",
-                        title: "Privat & Sicher",
-                        desc: "Deine Gedanken gehören dir. Wir setzen auf höchste Sicherheitsstandards."
+                        title: t('landing.features.f5.title'),
+                        desc: t('landing.features.f5.desc')
                     }
                 ].map((feature, index) => (
                     <FeatureCard
@@ -702,39 +708,45 @@ export default function LandingPage() {
         {/* --- PRICING SECTION --- */}
         <View nativeID="preise" style={[styles.sectionContainer, { backgroundColor: isDark ? 'rgba(0,0,0,0.1)' : 'rgba(0,0,0,0.02)' }]}>
             <SectionTitle
-                title="Wähle deinen Plan" 
-                subtitle="Transparent und fair. Keine Chat-Speicherung für maximale Privatsphäre."
-                isDark={isDark} 
+                title={t('landing.pricing.title')}
+                subtitle={t('landing.pricing.subtitle')}
+                isDark={isDark}
             />
 
             <View style={styles.pricingGrid}>
                 <PricingCard
-                    title="Starter"
-                    price="0€"
-                    period="/ Monat"
-                    features={['Basis Chat (Keine Speicherung)', 'Standard Insights', 'Community Support']}
+                    title={t('landing.pricing.p1.title')}
+                    price={t('landing.pricing.p1.price')}
+                    period={t('landing.pricing.p1.period')}
+                    features={t('landing.pricing.p1.features', { returnObjects: true })}
                     isPopular={false}
                     isDark={isDark}
                     index={0}
+                    popularText={t('landing.pricing.popular')}
+                    chooseText={t('landing.pricing.choose')}
                 />
                 <PricingCard
-                    title="Pro (Monatlich)"
-                    price="2,90€"
-                    period="/ Monat"
-                    features={['Unbegrenzter Chat', 'Advanced AI Insights via Supabase', 'SiLive Personalisierte Events', 'Priority Support']}
+                    title={t('landing.pricing.p2.title')}
+                    price={t('landing.pricing.p2.price')}
+                    period={t('landing.pricing.p2.period')}
+                    features={t('landing.pricing.p2.features', { returnObjects: true })}
                     isPopular={true}
                     isDark={isDark}
                     index={1}
+                    popularText={t('landing.pricing.popular')}
+                    chooseText={t('landing.pricing.choose')}
                 />
                 <PricingCard
-                    title="Pro (Jährlich)"
-                    price="29€"
-                    priceSubtitle="Sparvorteil"
-                    period="/ Jahr"
-                    features={['Alles aus Pro Monatlich', 'Bester Preis', '2 Monate geschenkt', 'SiLive Priority']}
+                    title={t('landing.pricing.p3.title')}
+                    price={t('landing.pricing.p3.price')}
+                    priceSubtitle={t('landing.pricing.savings')}
+                    period={t('landing.pricing.p3.period')}
+                    features={t('landing.pricing.p3.features', { returnObjects: true })}
                     isPopular={false}
                     isDark={isDark}
                     index={2}
+                    popularText={t('landing.pricing.popular')}
+                    chooseText={t('landing.pricing.choose')}
                 />
             </View>
         </View>
@@ -742,21 +754,30 @@ export default function LandingPage() {
         {/* --- ABOUT US SECTION --- */}
         <View nativeID="vision" style={[styles.sectionContainer, { backgroundColor: isDark ? Colors.dark.background : Colors.light.background }]}>
              <SectionTitle
-                title="Die Vision"
-                subtitle="Hinter dem Code."
+                title={t('landing.about.title')}
+                subtitle={t('landing.about.subtitle')}
                 isDark={isDark}
             />
             
             <View style={[styles.aboutContent, { maxWidth: 1000 }]}>
                 <Animated.View entering={FadeInUp.duration(800)} style={[styles.aboutTextContainer, { padding: 60, backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)', borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }]}>
                     <Text style={[styles.aboutText, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary, fontSize: 24, lineHeight: 36 }]}>
-                        <Text style={{ fontWeight: 'bold', color: isDark ? Colors.dark.text : Colors.light.text }}>Simply</Text> ist nicht das Produkt einer riesigen Corporation mit tausenden von Mitarbeitern. Es ist das Ergebnis einer klaren Vision:
-                        Technologie sollte uns nicht überwältigen, sondern uns <Text style={{ color: Colors.primary, fontWeight: '600' }}>Klarheit</Text> schenken.
+                        <Trans
+                            i18nKey="landing.about.text1"
+                            components={{
+                                1: <Text style={{ fontWeight: 'bold', color: isDark ? Colors.dark.text : Colors.light.text }} />,
+                                2: <Text style={{ color: Colors.primary, fontWeight: '600' }} />
+                            }}
+                        />
                     </Text>
                     <View style={{ height: 24 }} />
                     <Text style={[styles.aboutText, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary, fontSize: 24, lineHeight: 36 }]}>
-                        Als <Text style={{ fontWeight: 'bold', color: isDark ? Colors.dark.text : Colors.light.text }}>One-Man-Gründer</Text> entwickle ich diese App mit einer Leidenschaft für Details, die man in großen Teams oft vermisst.
-                        Jedes Feature, jede Animation und jede Zeile Code wurde geschrieben, um dir zu helfen, den Fokus in einer lauten Welt zurückzugewinnen.
+                        <Trans
+                            i18nKey="landing.about.text2"
+                            components={{
+                                1: <Text style={{ fontWeight: 'bold', color: isDark ? Colors.dark.text : Colors.light.text }} />
+                            }}
+                        />
                     </Text>
                     <View style={{ height: 32 }} />
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
@@ -765,7 +786,7 @@ export default function LandingPage() {
                         </View>
                         <View>
                             <Text style={[styles.founderName, { color: isDark ? Colors.dark.text : Colors.light.text, fontSize: 22 }]}>Leon</Text>
-                            <Text style={[styles.founderRole, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary, fontSize: 18 }]}>Gründer & Entwickler</Text>
+                            <Text style={[styles.founderRole, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary, fontSize: 18 }]}>{t('landing.about.role')}</Text>
                         </View>
                     </View>
                 </Animated.View>
@@ -775,7 +796,7 @@ export default function LandingPage() {
         {/* --- CONTACT SECTION --- */}
         <View nativeID="kontakt" style={[styles.sectionContainer, { backgroundColor: isDark ? 'rgba(0,0,0,0.1)' : 'rgba(0,0,0,0.02)', paddingBottom: 300 }]}>
              <SectionTitle
-                title="Kontakt"
+                title={t('landing.contact.title')}
                 // Subtitle entfernt auf User-Wunsch
                 isDark={isDark}
             />
@@ -788,7 +809,7 @@ export default function LandingPage() {
                     end={{ x: 1, y: 1 }}
                 />
                 <Text style={[styles.contactSub, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
-                    Hast du Fragen, Feedback oder einfach eine gute Idee? Schreib mir direkt.
+                    {t('landing.contact.subtitle')}
                 </Text>
                 
                 <TouchableOpacity style={[styles.contactBtn, { backgroundColor: Colors.primary }]}>
@@ -822,24 +843,24 @@ export default function LandingPage() {
                 <View style={styles.footerCol}>
                 <Text style={[styles.footerBrand, { color: isDark ? Colors.dark.text : Colors.light.text }]}>Simply</Text>
                 <Text style={[styles.footerText, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
-                    Intelligence made simple.
+                    {t('landing.footer.tagline')}
                 </Text>
                 </View>
                 <View style={styles.footerLinks}>
                     <TouchableOpacity onPress={() => scrollToSection('vision')}>
-                        <Text style={[styles.footerLink, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>Über uns</Text>
+                        <Text style={[styles.footerLink, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>{t('landing.footer.about')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => router.push('/datenschutz' as any)}>
-                        <Text style={[styles.footerLink, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>Datenschutz</Text>
+                        <Text style={[styles.footerLink, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>{t('landing.footer.privacy')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => router.push('/impressum' as any)}>
-                        <Text style={[styles.footerLink, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>Impressum</Text>
+                        <Text style={[styles.footerLink, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>{t('landing.footer.imprint')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => router.push('/agb' as any)}>
-                        <Text style={[styles.footerLink, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>AGB</Text>
+                        <Text style={[styles.footerLink, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>{t('landing.footer.terms')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => scrollToSection('kontakt')}>
-                        <Text style={[styles.footerLink, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>Kontakt</Text>
+                        <Text style={[styles.footerLink, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>{t('landing.footer.contact')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

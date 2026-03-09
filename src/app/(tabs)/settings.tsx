@@ -657,7 +657,7 @@ export default function SettingsScreen() {
         <View style={styles.modalOverlay}>
             <View style={[styles.modalContent, { backgroundColor: currentTheme.background, borderColor: currentTheme.border }]}>
                 <View style={styles.modalHeader}>
-                    <Text style={[styles.modalTitle, { color: currentTheme.text }]}>Was speichern wir?</Text>
+                    <Text style={[styles.modalTitle, { color: currentTheme.text }]}>{t('tabs.settings.modal.title')}</Text>
                     <TouchableOpacity onPress={() => {
                         playClickSound();
                         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -668,11 +668,7 @@ export default function SettingsScreen() {
                 </View>
                 <ScrollView style={{ maxHeight: 300 }}>
                     <Text style={[styles.modalText, { color: currentTheme.textSecondary }]}>
-                        Wir speichern deine Profilinformationen (Username, Email) lokal auf deinem Gerät.
-                        {"\n\n"}
-                        Deine Chat-Verläufe sind "Ephemeral" und werden standardmäßig nach der eingestellten Zeit gelöscht.
-                        {"\n\n"}
-                        Insights-Daten werden lokal analysiert und für den gewählten Zeitraum gespeichert, um dir Statistiken anzuzeigen. Es erfolgt kein Upload auf externe Server ohne deine Zustimmung.
+                        {t('tabs.settings.modal.text')}
                     </Text>
                 </ScrollView>
                 <TouchableOpacity
@@ -683,7 +679,7 @@ export default function SettingsScreen() {
                         setShowDataModal(false);
                     }}
                 >
-                    <Text style={styles.buttonText}>Verstanden</Text>
+                    <Text style={styles.buttonText}>{t('tabs.settings.modal.understood')}</Text>
                 </TouchableOpacity>
             </View>
         </View>
