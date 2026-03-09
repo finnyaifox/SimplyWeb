@@ -1,6 +1,6 @@
 import { Tabs, useLocalSearchParams } from 'expo-router';
 import React from 'react';
-import { Platform, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Platform, View, StyleSheet, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import { useTheme } from '@/context/ThemeContext';
 import { HapticTab } from '@/components/haptic-tab';
@@ -64,22 +64,31 @@ const TabIcon = ({ focused, title }: { focused: boolean; title: string }) => {
 
 export default function TabLayout() {
   const { isDark } = useTheme();
+  const { width } = useWindowDimensions();
   const isWeb = Platform.OS === 'web';
+  const isMobileWeb = isWeb && width < 1024;
   const { mode } = useLocalSearchParams<{ mode?: string }>();
   const isChatOnly = mode === 'chatOnly';
 
   const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
     if (isWeb) {
       return (
-        <View style={styles.webContainer}>
+        <View style={[
+          styles.webContainer,
+          isMobileWeb && { padding: 0 }
+        ]}>
           <View style={[
             styles.glassCard,
-            { 
+            {
               backgroundColor: isDark ? 'rgba(0, 10, 8, 0.8)' : 'rgba(255, 248, 246, 0.8)',
-              borderColor: isDark ? 'rgba(16, 185, 129, 0.1)' : 'rgba(164, 137, 104, 0.1)'
+              borderColor: isDark ? 'rgba(16, 185, 129, 0.1)' : 'rgba(164, 137, 104, 0.1)',
+              flexDirection: isMobileWeb ? 'column' : 'row',
+              borderRadius: isMobileWeb ? 0 : 32,
+              height: isMobileWeb ? '100vh' : '85vh',
+              maxWidth: isMobileWeb ? '100%' : 1200,
             }
           ]}>
-            <WebSidebar isChatOnly={isChatOnly} />
+            {!isMobileWeb && <WebSidebar isChatOnly={isChatOnly} />}
             <View style={styles.webContent}>
               {children}
             </View>

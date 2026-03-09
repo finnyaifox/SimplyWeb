@@ -12,7 +12,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActivityIndicator, Alert, Animated, Dimensions, Easing, Image, Keyboard, KeyboardAvoidingView, Platform, Share, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { ActivityIndicator, Alert, Animated, Dimensions, Easing, Image, Keyboard, KeyboardAvoidingView, Platform, Share, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, useWindowDimensions } from 'react-native';
 import { FlatList, Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Reanimated, { Extrapolation, interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -20,6 +20,9 @@ import DraggableScrollbar from '../../components/ui/DraggableScrollbar';
 import { useChat } from '../../hooks/useChat';
 import { transcribeAudio } from '../../services/aiService';
 import { playTTS } from '../../services/ttsService';
+
+const logoLight = require('@/assets/images/logo_header_light.png');
+const logoDark = require('@/assets/images/logo_header_dark.png');
 
 const { width } = Dimensions.get('window');
 
@@ -75,6 +78,9 @@ const EphemeralTimer = React.memo(({ timestamp, durationMinutes, isUser, isDark 
 export default function ChatScreen() {
   const { t } = useTranslation();
   const { theme: contextTheme, isDark } = useTheme();
+  const { width: windowWidth } = useWindowDimensions();
+  const isWeb = Platform.OS === 'web';
+  const isMobileWeb = isWeb && windowWidth < 1024;
   const { user } = useAuth();
   const { autoPlayAudioResponse, ephemeralTime } = useSettings();
   const { toggleAppTheme } = useTheme(); // Toggle Funktion holen
@@ -903,7 +909,15 @@ export default function ChatScreen() {
         style={StyleSheet.absoluteFill}
       />
 
-      <SafeAreaView style={[styles.safeArea, Platform.OS === 'web' ? { maxWidth: 600, width: '100%', alignSelf: 'center', paddingTop: 80 } : {}]} edges={['top']}>
+      <SafeAreaView style={[
+        styles.safeArea,
+        isWeb ? {
+          maxWidth: isMobileWeb ? '100%' : 600,
+          width: '100%',
+          alignSelf: 'center',
+          paddingTop: isMobileWeb ? 0 : 80
+        } : {}
+      ]} edges={isMobileWeb ? [] : ['top']}>
           {/* Custom Header */}
           <View style={[styles.headerContainer, { overflow: 'visible' }]}>
               {/* Hintergrund Blur für Chat Header (Fokus) */}
@@ -944,29 +958,42 @@ export default function ChatScreen() {
              {/* Theme Toggle Absolute Top Right */}
              {/* Nur anzeigen wenn nicht im Fokus-Modus im Chat, oder immer? User sagte "Theme-Icon schweben nackt" -> Soll header haben. Also lassen wir es da. */}
 
-             <TouchableOpacity onPress={toggleAppTheme} style={styles.themeToggle}>
-                  <Ionicons
-                      name={isDark ? 'moon' : 'sunny'}
-                      size={22}
-                      color={isDark ? 'rgba(255,255,255,0.6)' : Colors.light.icon}
-                  />
-              </TouchableOpacity>
+             {!isMobileWeb && (
+               <TouchableOpacity onPress={toggleAppTheme} style={styles.themeToggle}>
+                    <Ionicons
+                        name={isDark ? 'moon' : 'sunny'}
+                        size={22}
+                        color={isDark ? 'rgba(255,255,255,0.6)' : Colors.light.icon}
+                    />
+                </TouchableOpacity>
+             )}
               
               <View style={styles.headerContent}>
-              {/* Logo entfernt */}
+              {/* Logo prominent für Mobile Web */}
+              {isMobileWeb && (
+                <Reanimated.View style={[
+                  { alignItems: 'center', justifyContent: 'center', marginBottom: 20, marginTop: 20 },
+                  headerAnimatedStyle
+                ]}>
+                  <Image
+                    source={isDark ? logoDark : logoLight}
+                    style={{ width: 180, height: 60 }}
+                    resizeMode="contain"
+                  />
+                </Reanimated.View>
+              )}
               
-              {/* Slogan und Untertitel */}
-              <Reanimated.View style={[styles.headerTextContainer, headerAnimatedStyle, { marginTop: 80 }]}>
-                  {/* marginTop -40 statt -50 -> "minimal tiefer" (weniger negativ = weiter unten) */}
-                  <Text style={[styles.headerTitle, { color: isDark ? '#ECFDF5' : '#2D2A26', marginTop: 0 }]} numberOfLines={1} adjustsFontSizeToFit>
-                      {t('tabs.home.title')}
-                  </Text>
-                  {/* Untertitel tiefer (Abstand vergrößern) */}
-                  <Text style={[styles.headerSubtitle, { color: isDark ? '#6EE7B7' : '#8C7B68', marginTop: 15 }]}>
-                      {t('tabs.home.subtitle')}
-                  </Text>
-              </Reanimated.View>
-              {/* Focus Small Mic - REMOVED */}
+              {/* Slogan und Untertitel - Versteckt auf Mobile Web für minimalistische Ansicht */}
+              {!isMobileWeb && (
+                <Reanimated.View style={[styles.headerTextContainer, headerAnimatedStyle, { marginTop: 80 }]}>
+                    <Text style={[styles.headerTitle, { color: isDark ? '#ECFDF5' : '#2D2A26', marginTop: 0 }]} numberOfLines={1} adjustsFontSizeToFit>
+                        {t('tabs.home.title')}
+                    </Text>
+                    <Text style={[styles.headerSubtitle, { color: isDark ? '#6EE7B7' : '#8C7B68', marginTop: 15 }]}>
+                        {t('tabs.home.subtitle')}
+                    </Text>
+                </Reanimated.View>
+              )}
           </View>
       </View>
 
@@ -1096,7 +1123,7 @@ export default function ChatScreen() {
                             // ÜBER der TabBar/HomeIndicator schweben und voll sichtbar sind.
                             // Bei Fokus (Keyboard offen) erhöhen wir das Padding auf 40, um sicherzustellen,
                             // dass der Banner unter dem Input nicht von der Tastaturkante abgeschnitten wird.
-                            paddingBottom: isInputFocused ? 40 : 120
+                            paddingBottom: isInputFocused ? 40 : (isMobileWeb ? 40 : 120)
                         }
                     ]}>
                 {/* Bottom Navigation: X unten links - ENTFERNT */}
@@ -1115,7 +1142,7 @@ export default function ChatScreen() {
                 {/* Nur anzeigen wenn KEIN Chat offen ist */}
                 {/* Banner nur anzeigen, wenn keine Nachrichten da sind und kein Fokus */}
                 {/* Banner immer anzeigen, wenn keine Nachrichten da sind (auch bei Fokus) */}
-                {(messages.length === 0 && !isInputFocused && !isChatOnly) && (
+                {(messages.length === 0 && !isInputFocused && !isChatOnly && !isMobileWeb) && (
                 <TouchableOpacity onPress={() => {
                     playClickSound();
                     router.push('/(tabs)/insights');

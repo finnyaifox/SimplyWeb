@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { TextInput, TouchableOpacity, StyleSheet, View, Platform } from 'react-native';
+import { TextInput, TouchableOpacity, StyleSheet, View, Platform, useWindowDimensions } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
@@ -22,8 +22,13 @@ const ChatInput = memo(({
   onBlur 
 }: ChatInputProps) => {
   
+  const { width } = useWindowDimensions();
+  const isMobile = width < 1024;
+  
   return (
-    <BlurView intensity={isDark ? 25 : 40} tint={isDark ? "dark" : "light"} style={[styles.inputContainer, {
+    <BlurView intensity={isDark ? 25 : 40} tint={isDark ? "dark" : "light"} style={[
+      styles.inputContainer,
+      {
         backgroundColor: isDark ? 'rgba(255,255,255,0.15)' : Colors.light.inputBackground,
         borderColor: isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.05)', // Weicher, sichtbarer Übergang (Light Mode)
         borderWidth: isDark ? 2 : 1.5,
@@ -32,7 +37,10 @@ const ChatInput = memo(({
         shadowRadius: isDark ? 12 : 6,
         shadowOffset: { width: 0, height: 2 },
         elevation: isDark ? 0 : 3,
-    }]}>
+        height: isMobile ? 70 : 100,
+        paddingHorizontal: isMobile ? 15 : 25,
+      }
+    ]}>
         <TextInput
             style={[
                 styles.textInput, 
@@ -105,7 +113,7 @@ const styles = StyleSheet.create({
   textInput: {
       flex: 1,
       color: '#fff',
-      fontSize: 18, // Größerer Text passend zur Höhe
+      fontSize: isMobile ? 16 : 18, // Größerer Text passend zur Höhe
       fontWeight: '500',
       height: '100%',
   },
