@@ -391,7 +391,7 @@ export default function SiLiveScreen() {
 
   const renderSectionHeader = ({ section: { title, data, emptyMessage } }: { section: SectionData }) => {
      // Zeige Header immer, außer wenn keine Daten UND wir nicht gesucht haben (initialer State)
-     if (!hasSearched) return null;
+     if (!hasSearched) return <View />;
 
      return (
         <View style={[styles.sectionHeader, { backgroundColor: 'transparent' }]}>

@@ -133,7 +133,6 @@ export default function TabLayout() {
               shadowOpacity: 0.2,
               shadowRadius: 10,
               borderTopColor: 'transparent',
-              borderTopWidth: 0,
               display: isWeb ? 'none' : 'flex',
             },
           }}>

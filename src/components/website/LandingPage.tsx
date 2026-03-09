@@ -617,7 +617,7 @@ export default function LandingPage() {
                         <Trans
                             t={t}
                             i18nKey="landing.hero.title"
-                            components={{ 1: <Text style={{ color: Colors.primary }} /> }}
+                            components={{ '1': <Text style={{ color: Colors.primary }} /> }}
                         />
                     </Animated.Text>
 
@@ -767,8 +767,8 @@ export default function LandingPage() {
                             t={t}
                             i18nKey="landing.about.text1"
                             components={{
-                                1: <Text style={{ fontWeight: 'bold', color: isDark ? Colors.dark.text : Colors.light.text }} />,
-                                2: <Text style={{ color: Colors.primary, fontWeight: '600' }} />
+                                '1': <Text style={{ fontWeight: 'bold', color: isDark ? Colors.dark.text : Colors.light.text }} />,
+                                '2': <Text style={{ color: Colors.primary, fontWeight: '600' }} />
                             }}
                         />
                     </Text>
@@ -778,7 +778,7 @@ export default function LandingPage() {
                             t={t}
                             i18nKey="landing.about.text2"
                             components={{
-                                1: <Text style={{ fontWeight: 'bold', color: isDark ? Colors.dark.text : Colors.light.text }} />
+                                '1': <Text style={{ fontWeight: 'bold', color: isDark ? Colors.dark.text : Colors.light.text }} />
                             }}
                         />
                     </Text>
