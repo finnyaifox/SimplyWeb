@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Alert, Animated, Dimensions, Easing, Image, Keyboard, KeyboardAvoidingView, Platform, Share, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
@@ -80,6 +80,8 @@ export default function ChatScreen() {
   const { toggleAppTheme } = useTheme(); // Toggle Funktion holen
   
   const router = useRouter();
+  const { mode } = useLocalSearchParams<{ mode?: string }>();
+  const isChatOnly = mode === 'chatOnly';
   const { addMessage, messages, clearMessages, isLoading } = useChat();
   const [inputText, setInputText] = useState('');
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
@@ -1113,7 +1115,7 @@ export default function ChatScreen() {
                 {/* Nur anzeigen wenn KEIN Chat offen ist */}
                 {/* Banner nur anzeigen, wenn keine Nachrichten da sind und kein Fokus */}
                 {/* Banner immer anzeigen, wenn keine Nachrichten da sind (auch bei Fokus) */}
-                {(messages.length === 0 && !isInputFocused) && (
+                {(messages.length === 0 && !isInputFocused && !isChatOnly) && (
                 <TouchableOpacity onPress={() => {
                     playClickSound();
                     router.push('/(tabs)/insights');

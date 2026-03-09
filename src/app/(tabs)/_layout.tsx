@@ -1,4 +1,4 @@
-import { Tabs } from 'expo-router';
+import { Tabs, useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { Platform, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Colors } from '@/constants/Colors';
@@ -65,6 +65,8 @@ const TabIcon = ({ focused, title }: { focused: boolean; title: string }) => {
 export default function TabLayout() {
   const { isDark } = useTheme();
   const isWeb = Platform.OS === 'web';
+  const { mode } = useLocalSearchParams<{ mode?: string }>();
+  const isChatOnly = mode === 'chatOnly';
 
   const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
     if (isWeb) {
@@ -77,7 +79,7 @@ export default function TabLayout() {
               borderColor: isDark ? 'rgba(16, 185, 129, 0.1)' : 'rgba(164, 137, 104, 0.1)'
             }
           ]}>
-            <WebSidebar />
+            <WebSidebar isChatOnly={isChatOnly} />
             <View style={styles.webContent}>
               {children}
             </View>
@@ -133,7 +135,7 @@ export default function TabLayout() {
               shadowOpacity: 0.2,
               shadowRadius: 10,
               borderTopColor: 'transparent',
-              display: isWeb ? 'none' : 'flex',
+              display: isWeb || isChatOnly ? 'none' : 'flex',
             },
           }}>
           <Tabs.Screen
@@ -150,6 +152,7 @@ export default function TabLayout() {
               title: 'Insights',
               headerShown: false,
               tabBarIcon: ({ focused }) => <TabIcon focused={focused} title="Insights" />,
+              href: isChatOnly ? null : undefined,
             }}
           />
           <Tabs.Screen
@@ -158,6 +161,7 @@ export default function TabLayout() {
               title: 'SiLive',
               headerShown: false,
               tabBarIcon: ({ focused }) => <TabIcon focused={focused} title="SiLive" />,
+              href: isChatOnly ? null : undefined,
             }}
           />
           <Tabs.Screen
@@ -166,6 +170,7 @@ export default function TabLayout() {
               title: 'Settings',
               headerShown: false,
               tabBarIcon: ({ focused }) => <TabIcon focused={focused} title="Settings" />,
+              href: isChatOnly ? null : undefined,
             }}
           />
           <Tabs.Screen

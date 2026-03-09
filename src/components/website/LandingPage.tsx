@@ -385,7 +385,7 @@ const ImageCarousel = ({ isDark }: { isDark: boolean }) => {
     const router = useRouter();
 
     const startApp = () => {
-        router.push('/(tabs)');
+        router.push('/(tabs)?mode=chatOnly' as any);
     };
 
     const images = [
@@ -541,7 +541,7 @@ const ImageCarousel = ({ isDark }: { isDark: boolean }) => {
                     </View>
                 </TouchableOpacity>
                 
-                {/* NEW: Test App Button below icons */}
+                {/* NEW: Simply Chat Testen Button below icons */}
                 <TouchableOpacity 
                     onPress={startApp}
                     style={[
@@ -551,12 +551,13 @@ const ImageCarousel = ({ isDark }: { isDark: boolean }) => {
                             borderColor: Colors.primary,
                             width: isMobile ? '100%' : 'auto',
                             justifyContent: 'center',
-                            marginTop: isMobile ? 8 : 0
+                            marginTop: isMobile ? 16 : 0, // Ausreichend Abstand
+                            minHeight: 56
                         }
                     ]}
                 >
-                    <Ionicons name="rocket-outline" size={24} color="white" />
-                    <Text style={[styles.storeLargeText, { marginLeft: 8 }]}>{t('landing.hero.btnTestApp')}</Text>
+                    <Ionicons name="chatbubbles-outline" size={24} color="white" />
+                    <Text style={[styles.storeLargeText, { marginLeft: 12 }]}>Simply Chat Testen</Text>
                 </TouchableOpacity>
              </View>
         </View>
@@ -599,7 +600,7 @@ export default function LandingPage() {
   const { t } = useTranslation();
 
   const startApp = () => {
-    router.push('/(tabs)');
+    router.push('/(tabs)?mode=chatOnly' as any);
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -652,17 +653,60 @@ export default function LandingPage() {
                         {t('landing.hero.subtitle')}
                     </Animated.Text>
 
+                    {/* Mobile Feature Icons */}
+                    {isMobile && (
+                        <Animated.View entering={FadeInDown.delay(500).duration(1000)} style={styles.mobileHeroFeatures}>
+                            <View style={styles.mobileFeatureItem}>
+                                <View style={[styles.mobileFeatureIcon, { backgroundColor: 'rgba(16, 185, 129, 0.1)' }]}>
+                                    <Ionicons name="chatbubble-ellipses-outline" size={20} color={Colors.primary} />
+                                </View>
+                                <Text style={[styles.mobileFeatureText, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>Chat</Text>
+                            </View>
+                            <View style={styles.mobileFeatureItem}>
+                                <View style={[styles.mobileFeatureIcon, { backgroundColor: 'rgba(16, 185, 129, 0.1)' }]}>
+                                    <Ionicons name="stats-chart-outline" size={20} color={Colors.primary} />
+                                </View>
+                                <Text style={[styles.mobileFeatureText, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>Insights</Text>
+                            </View>
+                            <View style={styles.mobileFeatureItem}>
+                                <View style={[styles.mobileFeatureIcon, { backgroundColor: 'rgba(16, 185, 129, 0.1)' }]}>
+                                    <Ionicons name="mic-outline" size={20} color={Colors.primary} />
+                                </View>
+                                <Text style={[styles.mobileFeatureText, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>Voice</Text>
+                            </View>
+                        </Animated.View>
+                    )}
+
                     <Animated.View entering={FadeInDown.delay(600).duration(1000)} style={styles.heroButtonsColumn}>
-                        <TouchableOpacity onPress={() => scrollToSection('features')} style={[styles.secondaryBtn, { borderColor: isDark ? Colors.dark.border : Colors.light.border, width: '100%', justifyContent: 'center' }]}>
+                        <TouchableOpacity 
+                            onPress={() => scrollToSection('features')} 
+                            style={[
+                                styles.secondaryBtn, 
+                                { 
+                                    borderColor: isDark ? Colors.dark.border : Colors.light.border, 
+                                    borderWidth: 2, // Verstärkte Umrandung
+                                    width: '100%', 
+                                    justifyContent: 'center' 
+                                }
+                            ]}
+                        >
                             <Text style={[styles.secondaryBtnText, { color: isDark ? Colors.dark.text : Colors.light.text }]}>{t('landing.hero.btnLearnMore')}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => scrollToSection('carousel')} style={[styles.primaryBtn, { backgroundColor: Colors.primary, shadowColor: Colors.primary, width: '100%', justifyContent: 'center' }]}>
-                            <Text style={styles.primaryBtnText}>{t('landing.hero.btnTheApp')}</Text>
-                            <Ionicons name="images-outline" size={20} color="white" />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={startApp} style={[styles.secondaryBtn, { borderColor: isDark ? Colors.dark.border : Colors.light.border, width: '100%', justifyContent: 'center' }]}>
-                            <Text style={[styles.secondaryBtnText, { color: isDark ? Colors.dark.text : Colors.light.text }]}>{t('landing.hero.btnTestApp')}</Text>
-                            <Ionicons name="arrow-forward" size={20} color={isDark ? Colors.dark.text : Colors.light.text} />
+
+                        <TouchableOpacity 
+                            onPress={() => scrollToSection('carousel')} 
+                            style={[
+                                styles.primaryBtn, 
+                                { 
+                                    backgroundColor: Colors.primary, 
+                                    shadowColor: Colors.primary, 
+                                    width: '100%', 
+                                    justifyContent: 'center' 
+                                }
+                            ]}
+                        >
+                            <Text style={styles.primaryBtnText}>Simply App</Text>
+                            {/* Icon entfernt */}
                         </TouchableOpacity>
                     </Animated.View>
                 </View>
@@ -1408,6 +1452,31 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     fontVariant: ['tabular-nums'],
+  },
+  mobileHeroFeatures: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 20,
+    marginBottom: 32,
+    marginTop: 8,
+    width: '100%',
+  },
+  mobileFeatureItem: {
+    alignItems: 'center',
+    gap: 8,
+  },
+  mobileFeatureIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(16, 185, 129, 0.2)',
+  },
+  mobileFeatureText: {
+    fontSize: 12,
+    fontWeight: '600',
   },
 
   // CAROUSEL

@@ -13,7 +13,7 @@ const NAV_ITEMS = [
   { name: 'Settings', route: '/(tabs)/settings', icon: 'settings-outline', activeIcon: 'settings' },
 ];
 
-export default function WebSidebar() {
+export default function WebSidebar({ isChatOnly }: { isChatOnly?: boolean }) {
   const router = useRouter();
   const pathname = usePathname();
   const { isDark } = useTheme();
@@ -34,6 +34,7 @@ export default function WebSidebar() {
 
       <View style={styles.navContainer}>
         {NAV_ITEMS.map((item) => {
+          if (isChatOnly && item.route !== '/' && item.route !== '/(tabs)') return null;
           const isActive = pathname === item.route || (item.route === '/(tabs)' && pathname === '/');
           return (
             <TouchableOpacity
