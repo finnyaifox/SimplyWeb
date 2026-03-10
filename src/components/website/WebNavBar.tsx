@@ -46,9 +46,26 @@ export default function WebNavBar() {
     const isHomePage = pathname === '/' || pathname === '/index' || pathname === '';
     if (!isHomePage) {
       router.push('/');
+      if (Platform.OS === 'web') {
+        setTimeout(() => {
+            const attemptScroll = (retries = 0) => {
+                const element = document.getElementById('hero');
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    window.history.pushState(null, '', '/');
+                } else if (retries < 10) {
+                    setTimeout(() => attemptScroll(retries + 1), 100);
+                }
+            };
+            attemptScroll();
+        }, 200);
+      }
     } else {
       if (Platform.OS === 'web') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const heroEl = document.getElementById('hero');
+        if (heroEl) {
+            heroEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
         window.history.pushState(null, '', '/');
       }
     }
@@ -101,7 +118,10 @@ export default function WebNavBar() {
 
         // Wir sind schon auf der Startseite -> Direkt scrollen
         if (sectionId === 'hero') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const heroEl = document.getElementById('hero');
+            if (heroEl) {
+                heroEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
             window.history.pushState(null, '', '/');
             return;
         }
