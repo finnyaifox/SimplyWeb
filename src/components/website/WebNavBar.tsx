@@ -45,20 +45,10 @@ export default function WebNavBar() {
     
     const isHomePage = pathname === '/' || pathname === '/index' || pathname === '';
     if (!isHomePage) {
-      router.push('/');
       if (Platform.OS === 'web') {
-        setTimeout(() => {
-            const attemptScroll = (retries = 0) => {
-                const element = document.getElementById('hero');
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    window.history.pushState(null, '', '/');
-                } else if (retries < 10) {
-                    setTimeout(() => attemptScroll(retries + 1), 100);
-                }
-            };
-            attemptScroll();
-        }, 200);
+        window.location.href = '/';
+      } else {
+        router.push('/');
       }
     } else {
       if (Platform.OS === 'web') {
@@ -93,26 +83,9 @@ export default function WebNavBar() {
         const isHomePage = pathname === '/' || pathname === '/index' || pathname === '';
 
         if (!isHomePage) {
-            // 1. Navigation zur Startseite erzwingen via Router
-            // router.push('/') unmountet die App-Screens sauberer.
-            router.push('/');
-
-            // 2. Warten, bis Navigation erfolgt ist und DOM bereitsteht
-            // Da wir keine Callback für "ComponentDidMount" der LandingPage hier haben,
-            // nutzen wir einen Polling-Mechanismus oder Timeout.
-            setTimeout(() => {
-                const attemptScroll = (retries = 0) => {
-                    const element = document.getElementById(sectionId);
-                    if (element) {
-                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        window.history.pushState(null, '', `/#${sectionId}`);
-                    } else if (retries < 10) {
-                        // Retry ein paar Mal (max 1000ms total) falls Rendering dauert
-                        setTimeout(() => attemptScroll(retries + 1), 100);
-                    }
-                };
-                attemptScroll();
-            }, 200);
+            // Harter Redirect zur Startseite mit Anker,
+            // um den App-Kontext komplett zu verlassen und den Website-Kontext neu aufzubauen.
+            window.location.href = '/#' + sectionId;
             return;
         }
 
@@ -391,7 +364,7 @@ export default function WebNavBar() {
                                 style={[styles.mobileNavItem, { borderBottomWidth: 0 }]}
                                 onPress={() => {
                                     setIsMobileMenuOpen(false);
-                                    router.push('/(tabs)');
+                                    // Dummy: router.push('/(tabs)');
                                 }}
                             >
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -413,7 +386,11 @@ export default function WebNavBar() {
                             }]}
                             onPress={() => {
                                 setIsMobileMenuOpen(false);
-                                handleLoginAction();
+                                if (user) {
+                                    // Dummy for App Öffnen
+                                } else {
+                                    signInWithGoogle();
+                                }
                             }}
                         >
                             <Text style={styles.ctaText}>{user ? t('nav.openApp') : t('nav.login')}</Text>

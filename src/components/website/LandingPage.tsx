@@ -540,25 +540,6 @@ const ImageCarousel = ({ isDark }: { isDark: boolean }) => {
                         <Text style={styles.storeLargeText}>{t('landing.carousel.storeLargePlay')}</Text>
                     </View>
                 </TouchableOpacity>
-                
-                {/* NEW: Simply Chat Testen Button below icons */}
-                <TouchableOpacity 
-                    onPress={startApp}
-                    style={[
-                        styles.storeBtn, 
-                        { 
-                            backgroundColor: Colors.primary, 
-                            borderColor: Colors.primary,
-                            width: isMobile ? '100%' : 'auto',
-                            justifyContent: 'center',
-                            marginTop: isMobile ? 16 : 0, // Ausreichend Abstand
-                            minHeight: 56
-                        }
-                    ]}
-                >
-                    <Ionicons name="chatbubbles-outline" size={24} color="white" />
-                    <Text style={[styles.storeLargeText, { marginLeft: 12 }]}>Simply Chat Testen</Text>
-                </TouchableOpacity>
              </View>
         </View>
     );
@@ -598,6 +579,24 @@ export default function LandingPage() {
   const router = useRouter();
   const [isYearly, setIsYearly] = useState(false);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (Platform.OS === 'web' && window.location.hash) {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        // Polling until the element is found after mount
+        const attemptScroll = (retries = 0) => {
+          const element = document.getElementById(hash);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else if (retries < 10) {
+            setTimeout(() => attemptScroll(retries + 1), 100);
+          }
+        };
+        setTimeout(attemptScroll, 100);
+      }
+    }
+  }, []);
 
   const startApp = () => {
     router.push('/(tabs)?mode=chatOnly' as any);
@@ -1567,8 +1566,8 @@ const styles = StyleSheet.create({
       opacity: 0.7,
   },
   downloadSection: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
+      flexDirection: 'column',
+      alignItems: 'center',
       gap: 16,
       justifyContent: 'center',
       marginTop: 32,
