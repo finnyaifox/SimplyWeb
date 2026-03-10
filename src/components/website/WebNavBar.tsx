@@ -43,21 +43,16 @@ export default function WebNavBar() {
       setIsMobileMenuOpen(false);
     }
     
-    const isHomePage = pathname === '/' || pathname === '/index' || pathname === '';
-    if (!isHomePage) {
-      if (Platform.OS === 'web') {
-        window.location.href = '/';
+    if (Platform.OS === 'web') {
+      const heroEl = document.getElementById('hero');
+      if (heroEl) {
+          heroEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          window.history.pushState(null, '', '/');
       } else {
-        router.push('/');
+          window.location.href = '/';
       }
     } else {
-      if (Platform.OS === 'web') {
-        const heroEl = document.getElementById('hero');
-        if (heroEl) {
-            heroEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        window.history.pushState(null, '', '/');
-      }
+      router.push('/');
     }
   };
 
@@ -80,38 +75,14 @@ export default function WebNavBar() {
     }
 
     if (Platform.OS === 'web') {
-        const isHomePage = pathname === '/' || pathname === '/index' || pathname === '';
-
-        if (!isHomePage) {
-            // Harter Redirect zur Startseite mit Anker,
-            // um den App-Kontext komplett zu verlassen und den Website-Kontext neu aufzubauen.
-            window.location.href = '/#' + sectionId;
-            return;
-        }
-
-        // Wir sind schon auf der Startseite -> Direkt scrollen
-        if (sectionId === 'hero') {
-            const heroEl = document.getElementById('hero');
-            if (heroEl) {
-                heroEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-            window.history.pushState(null, '', '/');
-            return;
-        }
-
-        const element = document.getElementById(sectionId);
+        const element = document.getElementById(sectionId === 'hero' ? 'hero' : sectionId);
+        
         if (element) {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            window.history.pushState(null, '', `/#${sectionId}`);
+            window.history.pushState(null, '', sectionId === 'hero' ? '/' : `/#${sectionId}`);
         } else {
-             // Fallback falls Element noch nicht da (z.B. bei schnellem Wechsel)
-             setTimeout(() => {
-                 const el = document.getElementById(sectionId);
-                 if (el) {
-                     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                     window.history.pushState(null, '', `/#${sectionId}`);
-                 }
-             }, 100);
+             // Element nicht gefunden -> wir sind wahrscheinlich nicht auf der Startseite
+             window.location.href = sectionId === 'hero' ? '/' : '/#' + sectionId;
         }
     }
   };
@@ -212,7 +183,13 @@ export default function WebNavBar() {
                         {/* Permanent App Open Button */}
                         <TouchableOpacity
                             style={[styles.secondaryBtn, { borderColor: isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)' }]}
-                            onPress={() => router.push('/(tabs)')}
+                            onPress={() => {
+                                if (Platform.OS === 'web') {
+                                    window.open('/chat-view', '_blank');
+                                } else {
+                                    router.push('/chat-view');
+                                }
+                            }}
                         >
                             <Text style={[styles.secondaryBtnText, { color: isDark ? 'white' : 'black' }]}>
                                 {t('nav.openApp')}
@@ -223,7 +200,7 @@ export default function WebNavBar() {
                         {user ? (
                             <TouchableOpacity
                                 style={[styles.ctaBtn, { backgroundColor: Colors.primary }]}
-                                onPress={() => signOut()}
+                                onPress={() => {}}
                             >
                                 <Text style={styles.ctaText}>{t('nav.logout')}</Text>
                             </TouchableOpacity>
@@ -231,12 +208,12 @@ export default function WebNavBar() {
                             <View style={{ position: 'relative', zIndex: 40 }}>
                                 <TouchableOpacity
                                     style={[styles.ctaBtn, { backgroundColor: Colors.primary }]}
-                                    onPress={() => setIsLoginPopoverVisible(!isLoginPopoverVisible)}
+                                    onPress={() => {}}
                                 >
                                     <Text style={styles.ctaText}>{t('nav.login')}</Text>
                                 </TouchableOpacity>
 
-                                {isLoginPopoverVisible && (
+                                {false && isLoginPopoverVisible && (
                                     <>
                                         <TouchableOpacity
                                             style={styles.popoverOverlay}
@@ -364,7 +341,11 @@ export default function WebNavBar() {
                                 style={[styles.mobileNavItem, { borderBottomWidth: 0 }]}
                                 onPress={() => {
                                     setIsMobileMenuOpen(false);
-                                    // Dummy: router.push('/(tabs)');
+                                    if (Platform.OS === 'web') {
+                                        window.open('/chat-view', '_blank');
+                                    } else {
+                                        router.push('/chat-view');
+                                    }
                                 }}
                             >
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -387,9 +368,13 @@ export default function WebNavBar() {
                             onPress={() => {
                                 setIsMobileMenuOpen(false);
                                 if (user) {
-                                    // Dummy for App Öffnen
+                                    if (Platform.OS === 'web') {
+                                        window.open('/chat-view', '_blank');
+                                    } else {
+                                        router.push('/chat-view');
+                                    }
                                 } else {
-                                    signInWithGoogle();
+                                    // Dummy login action
                                 }
                             }}
                         >
