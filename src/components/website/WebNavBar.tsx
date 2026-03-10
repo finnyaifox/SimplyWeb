@@ -184,11 +184,7 @@ export default function WebNavBar() {
                         <TouchableOpacity
                             style={[styles.secondaryBtn, { borderColor: isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)' }]}
                             onPress={() => {
-                                if (Platform.OS === 'web') {
-                                    window.open('/chat-view', '_blank');
-                                } else {
-                                    router.push('/chat-view');
-                                }
+                                router.push('/chat-view');
                             }}
                         >
                             <Text style={[styles.secondaryBtnText, { color: isDark ? 'white' : 'black' }]}>
@@ -200,7 +196,7 @@ export default function WebNavBar() {
                         {user ? (
                             <TouchableOpacity
                                 style={[styles.ctaBtn, { backgroundColor: Colors.primary }]}
-                                onPress={() => {}}
+                                onPress={() => signOut()}
                             >
                                 <Text style={styles.ctaText}>{t('nav.logout')}</Text>
                             </TouchableOpacity>
@@ -208,12 +204,12 @@ export default function WebNavBar() {
                             <View style={{ position: 'relative', zIndex: 40 }}>
                                 <TouchableOpacity
                                     style={[styles.ctaBtn, { backgroundColor: Colors.primary }]}
-                                    onPress={() => {}}
+                                    onPress={() => setIsLoginPopoverVisible(!isLoginPopoverVisible)}
                                 >
                                     <Text style={styles.ctaText}>{t('nav.login')}</Text>
                                 </TouchableOpacity>
 
-                                {false && isLoginPopoverVisible && (
+                                {isLoginPopoverVisible && (
                                     <>
                                         <TouchableOpacity
                                             style={styles.popoverOverlay}
@@ -234,17 +230,30 @@ export default function WebNavBar() {
                                                 resizeMode="contain"
                                             />
                                             
-                                            <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]} onPress={() => { /* dummy */ }}>
+                                            <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]} onPress={() => {
+                                                if (Platform.OS !== 'web') {
+                                                    setIsLoginPopoverVisible(false);
+                                                    signInWithGoogle();
+                                                }
+                                            }}>
                                                 <Ionicons name="logo-google" size={20} color={isDark ? "white" : "black"} style={{ marginRight: 10 }} />
                                                 <Text style={[styles.authBtnText, { color: isDark ? 'white' : 'black' }]}>{t('nav.loginGoogle')}</Text>
                                             </TouchableOpacity>
 
-                                            <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]} onPress={() => { /* dummy */ }}>
+                                            <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]} onPress={() => {
+                                                if (Platform.OS !== 'web') {
+                                                    // TODO: Apple Login
+                                                }
+                                            }}>
                                                 <Ionicons name="logo-apple" size={20} color={isDark ? "white" : "black"} style={{ marginRight: 10 }} />
                                                 <Text style={[styles.authBtnText, { color: isDark ? 'white' : 'black' }]}>{t('nav.loginApple')}</Text>
                                             </TouchableOpacity>
 
-                                            <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]} onPress={() => { /* dummy */ }}>
+                                            <TouchableOpacity style={[styles.authBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5' }]} onPress={() => {
+                                                if (Platform.OS !== 'web') {
+                                                    // TODO: Facebook Login
+                                                }
+                                            }}>
                                                 <Ionicons name="logo-facebook" size={20} color={isDark ? "white" : "#1877F2"} style={{ marginRight: 10 }} />
                                                 <Text style={[styles.authBtnText, { color: isDark ? 'white' : 'black' }]}>{t('nav.loginFacebook')}</Text>
                                             </TouchableOpacity>
@@ -374,7 +383,9 @@ export default function WebNavBar() {
                                         router.push('/chat-view');
                                     }
                                 } else {
-                                    // Dummy login action
+                                    if (Platform.OS !== 'web') {
+                                        signInWithGoogle();
+                                    }
                                 }
                             }}
                         >
