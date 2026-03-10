@@ -28,6 +28,26 @@ export default function WebSidebar({ isChatOnly }: { isChatOnly?: boolean }) {
         borderRightColor: isDark ? 'rgba(16, 185, 129, 0.1)' : 'rgba(0, 0, 0, 0.05)'
       }
     ]}>
+      <TouchableOpacity 
+        onPress={() => { if (Platform.OS === 'web') window.location.href = '/'; }}
+        style={[
+          styles.backBar,
+          { backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' }
+        ]}
+      >
+        <Ionicons 
+          name="arrow-back" 
+          size={14} 
+          color={isDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)'} 
+        />
+        <Text style={[
+          styles.backBarText, 
+          { color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)' }
+        ]}>
+          Zurück zur Website
+        </Text>
+      </TouchableOpacity>
+
       <View style={styles.logoContainer}>
          {/* Logo container empty as requested to remove "SimplyAI" text */}
       </View>
@@ -85,6 +105,19 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     backdropFilter: 'blur(20px)', // Web-only
   } as any,
+  backBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+    marginBottom: 20,
+    gap: 6,
+  },
+  backBarText: {
+    fontSize: 12,
+    fontWeight: '500',
+  },
   logoContainer: {
     marginBottom: 40,
     paddingHorizontal: 10,
