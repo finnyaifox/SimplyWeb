@@ -1,4 +1,4 @@
-import { Tabs, useLocalSearchParams } from 'expo-router';
+import { Tabs, useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import { Platform, View, StyleSheet, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { Colors } from '@/constants/Colors';
@@ -65,6 +65,7 @@ const TabIcon = ({ focused, title }: { focused: boolean; title: string }) => {
 export default function TabLayout() {
   const { isDark } = useTheme();
   const { width } = useWindowDimensions();
+  const router = useRouter();
   const isWeb = Platform.OS === 'web';
   const isMobileWeb = isWeb && width < 1024;
   const { mode } = useLocalSearchParams<{ mode?: string }>();
@@ -106,6 +107,30 @@ export default function TabLayout() {
   return (
     <LayoutWrapper>
       <View style={{ flex: 1, backgroundColor: isDark ? Colors.dark.background : Colors.light.background }}>
+        {isWeb && (
+          <View style={{
+            paddingHorizontal: 20,
+            paddingVertical: 12,
+            backgroundColor: isDark ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.03)',
+            borderBottomWidth: 1,
+            borderBottomColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+            zIndex: 10,
+          }}>
+            <TouchableOpacity
+              onPress={() => router.push('/')}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                alignSelf: 'flex-start',
+              }}
+            >
+              <Ionicons name="arrow-back" size={20} color={isDark ? '#FFFFFF' : '#000000'} style={{ marginRight: 6 }} />
+              <Text style={{ color: isDark ? '#FFFFFF' : '#000000', fontWeight: '600', fontSize: 15 }}>
+                Zurück zur Website
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
         <View style={{ flex: 1 }}>
           <Tabs
             screenOptions={{
