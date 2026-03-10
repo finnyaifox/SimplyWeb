@@ -5,7 +5,7 @@ import { useTheme } from '@/context/ThemeContext';
 import { useWebColorScheme } from '@/hooks/use-web-color-scheme';
 import { useRouter, usePathname } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeInRight, FadeOutRight, useAnimatedStyle, withTiming, withSpring } from 'react-native-reanimated';
 import { useAuth } from '@/context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/context/LanguageContext';
@@ -37,8 +37,25 @@ export default function WebNavBar() {
 
   const isMobile = width < 768;
 
+  const handleLogoPress = () => {
+    console.log('[WebNavBar] Logo pressed!');
+    if (isMobile) {
+      setIsMobileMenuOpen(false);
+    }
+    
+    const isHomePage = pathname === '/' || pathname === '/index' || pathname === '';
+    if (!isHomePage) {
+      router.push('/');
+    } else {
+      if (Platform.OS === 'web') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.history.pushState(null, '', '/');
+      }
+    }
+  };
+
   const scrollToSection = async (sectionId: string) => {
-    // console.log('[WebNavBar] scrollToSection:', sectionId, 'Current Path:', pathname);
+    console.log('[WebNavBar] scrollToSection called with:', sectionId, 'Current Path:', pathname, 'isMobile:', isMobile);
     
     if (isMobile) {
         setIsMobileMenuOpen(false);
@@ -56,11 +73,10 @@ export default function WebNavBar() {
     }
 
     if (Platform.OS === 'web') {
-        const isHomePage = pathname === '/' || pathname === '/index';
+        const isHomePage = pathname === '/' || pathname === '/index' || pathname === '';
 
         if (!isHomePage) {
             // 1. Navigation zur Startseite erzwingen via Router
-            // window.location.href ist zu aggressiv und lädt die App neu, was wir vermeiden wollen wenn möglich
             // router.push('/') unmountet die App-Screens sauberer.
             router.push('/');
 
@@ -73,17 +89,23 @@ export default function WebNavBar() {
                     if (element) {
                         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         window.history.pushState(null, '', `/#${sectionId}`);
-                    } else if (retries < 5) {
-                        // Retry ein paar Mal (max 500ms total) falls Rendering dauert
+                    } else if (retries < 10) {
+                        // Retry ein paar Mal (max 1000ms total) falls Rendering dauert
                         setTimeout(() => attemptScroll(retries + 1), 100);
                     }
                 };
                 attemptScroll();
-            }, 100);
+            }, 200);
             return;
         }
 
         // Wir sind schon auf der Startseite -> Direkt scrollen
+        if (sectionId === 'hero') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.history.pushState(null, '', '/');
+            return;
+        }
+
         const element = document.getElementById(sectionId);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -119,19 +141,25 @@ export default function WebNavBar() {
 
   return (
     <Animated.View entering={FadeInDown.duration(800)} style={styles.container} pointerEvents="box-none">
-      <View style={[styles.backgroundContainer, {
-          backgroundColor: isDark ? 'rgba(0, 15, 12, 0.7)' : 'rgba(255, 255, 255, 0.75)',
-          borderBottomColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.05)',
+      <View
+        pointerEvents="auto"
+        style={[styles.backgroundContainer, {
+          backgroundColor: isDark ? 'rgba(0, 10, 8, 0.8)' : 'rgba(249, 248, 246, 0.85)',
+          borderBottomColor: isDark ? 'rgba(52, 211, 153, 0.1)' : 'rgba(164, 137, 104, 0.15)',
           // @ts-ignore - Web specific property
-          backdropFilter: 'blur(16px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+          backdropFilter: 'blur(20px) saturate(190%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(190%)',
       }]}>
         <View style={styles.contentContainer}>
             {/* Logo Area */}
-            <TouchableOpacity onPress={() => scrollToSection('hero')} style={styles.logoContainer}>
+            <TouchableOpacity
+                onPress={handleLogoPress}
+                activeOpacity={0.7}
+                style={styles.logoContainer}
+            >
                 <Image
                   source={isDark ? logoDark : logoLight}
-                  style={{ width: 140, height: 50 }}
+                  style={{ width: 140, height: 45 }}
                   resizeMode="contain"
                 />
             </TouchableOpacity>
@@ -150,19 +178,27 @@ export default function WebNavBar() {
                                 style={styles.navLink}
                             >
                                 <Text style={[
-                                    styles.navLinkText, 
-                                    { 
+                                    styles.navLinkText,
+                                    {
                                         color: isDark
-                                            ? (hoveredItem === item.id ? '#FFFFFF' : 'rgba(255,255,255,0.85)')
-                                            : (hoveredItem === item.id ? Colors.primary : 'rgba(0,0,0,0.75)'),
-                                        textShadowColor: isDark ? 'rgba(16, 185, 129, 0.7)' : 'rgba(16, 185, 129, 0.3)',
+                                            ? (hoveredItem === item.id ? '#FFFFFF' : 'rgba(236, 253, 245, 0.65)')
+                                            : (hoveredItem === item.id ? Colors.primary : 'rgba(45, 42, 38, 0.7)'),
+                                        // @ts-ignore - Web specific transition
+                                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                        textShadowColor: isDark ? 'rgba(16, 185, 129, 0.5)' : 'rgba(16, 185, 129, 0.2)',
                                         textShadowOffset: { width: 0, height: 0 },
-                                        textShadowRadius: hoveredItem === item.id ? 15 : 8,
+                                        textShadowRadius: hoveredItem === item.id ? 12 : 0,
                                         transform: [{ scale: hoveredItem === item.id ? 1.05 : 1 }]
                                     }
                                 ]}>
                                     {item.label}
                                 </Text>
+                                {hoveredItem === item.id && (
+                                    <Animated.View
+                                        entering={FadeInDown.duration(200)}
+                                        style={[styles.activeIndicator, { backgroundColor: Colors.primary }]}
+                                    />
+                                )}
                             </TouchableOpacity>
                         ))}
                     </View>
@@ -252,11 +288,11 @@ export default function WebNavBar() {
 
                 {/* Mobile Menu Toggle */}
                 {isMobile && (
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         onPress={() => setIsMobileMenuOpen(true)}
-                        style={styles.mobileMenuBtn}
+                        style={[styles.mobileMenuBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' }]}
                     >
-                        <Ionicons name="menu" size={28} color={isDark ? "white" : "black"} />
+                        <Ionicons name="menu" size={26} color={isDark ? "white" : "black"} />
                     </TouchableOpacity>
                 )}
             </View>
@@ -268,61 +304,100 @@ export default function WebNavBar() {
         <Modal
             visible={isMobileMenuOpen}
             transparent={true}
-            animationType="fade"
+            animationType="none"
             onRequestClose={() => setIsMobileMenuOpen(false)}
         >
             <View style={styles.mobileOverlay}>
                 {/* Backdrop click to close */}
-                <TouchableOpacity 
-                    style={styles.mobileBackdrop} 
-                    activeOpacity={1} 
-                    onPress={() => setIsMobileMenuOpen(false)} 
+                <TouchableOpacity
+                    style={styles.mobileBackdrop}
+                    activeOpacity={1}
+                    onPress={() => setIsMobileMenuOpen(false)}
                 />
                 
                 {/* Sidebar Content */}
-                <Animated.View entering={FadeInDown} style={[styles.mobileSidebar, { 
-                    backgroundColor: isDark ? 'rgba(0, 20, 15, 0.85)' : 'rgba(255, 255, 255, 0.9)',
-                    // @ts-ignore
-                    backdropFilter: 'blur(12px)',
-                    WebkitBackdropFilter: 'blur(12px)',
-                }]}>
+                <Animated.View
+                    entering={FadeInRight.springify().damping(20)}
+                    exiting={FadeOutRight}
+                    style={[styles.mobileSidebar, {
+                        backgroundColor: isDark ? 'rgba(0, 15, 12, 0.95)' : 'rgba(249, 248, 246, 0.95)',
+                        // @ts-ignore
+                        backdropFilter: 'blur(25px)',
+                        WebkitBackdropFilter: 'blur(25px)',
+                    }]}
+                >
                     <View style={styles.mobileHeader}>
-                         <Image
-                            source={isDark ? logoDark : logoLight}
-                            style={{ width: 120, height: 40 }}
-                            resizeMode="contain"
-                        />
-                        <TouchableOpacity onPress={() => setIsMobileMenuOpen(false)} style={[styles.closeBtn, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' }]}>
-                            <Ionicons name="close" size={24} color={isDark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.5)"} />
+                        <TouchableOpacity onPress={handleLogoPress} activeOpacity={0.7}>
+                            <Image
+                                source={isDark ? logoDark : logoLight}
+                                style={{ width: 120, height: 40 }}
+                                resizeMode="contain"
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => setIsMobileMenuOpen(false)}
+                            style={[styles.closeBtn, { backgroundColor: isDark ? 'rgba(52, 211, 153, 0.1)' : 'rgba(0,0,0,0.05)' }]}
+                        >
+                            <Ionicons name="close" size={24} color={isDark ? Colors.primary : "black"} />
                         </TouchableOpacity>
                     </View>
 
-                    <ScrollView style={styles.mobileScroll}>
+                    <ScrollView style={styles.mobileScroll} showsVerticalScrollIndicator={false}>
                          <View style={styles.mobileSection}>
-                            <Text style={[styles.mobileSectionTitle, { color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)' }]}>{t('nav.menu')}</Text>
-                            {navItems.map((item) => (
-                                <TouchableOpacity
+                            <Text style={[styles.mobileSectionTitle, { color: isDark ? 'rgba(52, 211, 153, 0.5)' : 'rgba(164, 137, 104, 0.6)' }]}>
+                                {t('nav.menu')}
+                            </Text>
+                            {navItems.map((item, index) => (
+                                <Animated.View
                                     key={item.id}
-                                    onPress={() => scrollToSection(item.id)}
-                                    style={[styles.mobileNavItem, { borderBottomColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' }]}
+                                    entering={FadeInRight.delay(index * 50).duration(400)}
                                 >
-                                    <Text style={[styles.mobileNavText, { color: isDark ? 'white' : 'black' }]}>{item.label}</Text>
-                                    <Ionicons name="chevron-forward" size={16} color={isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.2)"} />
-                                </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => scrollToSection(item.id)}
+                                        style={[styles.mobileNavItem, { borderBottomColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)' }]}
+                                    >
+                                        <Text style={[styles.mobileNavText, { color: isDark ? 'white' : '#2D2A26' }]}>{item.label}</Text>
+                                        <Ionicons name="chevron-forward" size={18} color={isDark ? Colors.primary : "rgba(0,0,0,0.2)"} />
+                                    </TouchableOpacity>
+                                </Animated.View>
                             ))}
                         </View>
 
-                         <View style={styles.mobileDivider} />
+                        <View style={styles.mobileSection}>
+                             <Text style={[styles.mobileSectionTitle, { color: isDark ? 'rgba(52, 211, 153, 0.5)' : 'rgba(164, 137, 104, 0.6)' }]}>
+                                Account
+                            </Text>
+                            <TouchableOpacity
+                                style={[styles.mobileNavItem, { borderBottomWidth: 0 }]}
+                                onPress={() => {
+                                    setIsMobileMenuOpen(false);
+                                    router.push('/(tabs)');
+                                }}
+                            >
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <Ionicons name="apps-outline" size={20} color={isDark ? Colors.primary : Colors.primary} style={{ marginRight: 12 }} />
+                                    <Text style={[styles.mobileNavText, { color: isDark ? 'white' : '#2D2A26' }]}>{t('nav.openApp')}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.mobileDivider} />
                         
                         <TouchableOpacity
-                            style={[styles.ctaBtn, { backgroundColor: Colors.primary, justifyContent: 'center', marginTop: 20 }]}
+                            style={[styles.ctaBtn, {
+                                backgroundColor: Colors.primary,
+                                justifyContent: 'center',
+                                marginTop: 10,
+                                shadowOpacity: 0.4,
+                                shadowRadius: 15
+                            }]}
                             onPress={() => {
                                 setIsMobileMenuOpen(false);
-                                router.push('/(tabs)');
+                                handleLoginAction();
                             }}
                         >
-                            <Text style={styles.ctaText}>{t('nav.openApp')}</Text>
-                            <Ionicons name="arrow-forward" size={16} color="white" style={{marginLeft: 4}} />
+                            <Text style={styles.ctaText}>{user ? t('nav.openApp') : t('nav.login')}</Text>
+                            <Ionicons name="arrow-forward" size={18} color="white" style={{marginLeft: 8}} />
                         </TouchableOpacity>
 
                     </ScrollView>
@@ -339,7 +414,11 @@ const ThemeToggle = ({ isDark, toggleTheme }: { isDark: boolean, toggleTheme: ()
     return (
         <TouchableOpacity
             onPress={toggleTheme}
-            style={[styles.themeToggle, { backgroundColor: 'rgba(255,255,255,0.1)' }]}
+            activeOpacity={0.7}
+            style={[styles.themeToggle, {
+                backgroundColor: isDark ? 'rgba(52, 211, 153, 0.1)' : 'rgba(164, 137, 104, 0.1)',
+                borderColor: isDark ? 'rgba(52, 211, 153, 0.2)' : 'rgba(164, 137, 104, 0.2)'
+            }]}
         >
             <Ionicons
                 name={isDark ? "sunny" : "moon"}
@@ -354,9 +433,13 @@ const LanguageToggle = ({ language, setLanguage, isDark }: { language: string, s
     return (
         <TouchableOpacity
             onPress={() => setLanguage(language === 'de' ? 'en' : 'de')}
-            style={[styles.themeToggle, { backgroundColor: 'rgba(255,255,255,0.1)' }]}
+            activeOpacity={0.7}
+            style={[styles.themeToggle, {
+                backgroundColor: isDark ? 'rgba(52, 211, 153, 0.1)' : 'rgba(164, 137, 104, 0.1)',
+                borderColor: isDark ? 'rgba(52, 211, 153, 0.2)' : 'rgba(164, 137, 104, 0.2)'
+            }]}
         >
-            <Text style={{ color: isDark ? 'white' : Colors.primary, fontWeight: 'bold', fontSize: 14 }}>
+            <Text style={{ color: isDark ? 'white' : '#2D2A26', fontWeight: '800', fontSize: 13 }}>
                 {language.toUpperCase()}
             </Text>
         </TouchableOpacity>
@@ -376,18 +459,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    maxWidth: 1400, 
+    paddingVertical: 14,
+    paddingHorizontal: 32,
+    maxWidth: 1400,
     width: '100%',
     alignSelf: 'center',
     position: 'relative',
-    minHeight: 70,
+    minHeight: 80,
   },
   logoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     zIndex: 20,
+    padding: 8,
+    marginLeft: -8, // Compensate padding for alignment
   },
   absoluteCenter: {
     position: 'absolute',
@@ -401,17 +486,28 @@ const styles = StyleSheet.create({
   },
   navLinks: {
     flexDirection: 'row',
-    gap: 32,
+    gap: 36,
     paddingHorizontal: 20,
     paddingVertical: 10,
+    alignItems: 'center',
   },
   navLink: {
-    paddingVertical: 8,
+    paddingVertical: 10,
+    position: 'relative',
   },
   navLinkText: {
-    fontSize: 16,
-    fontWeight: '600',
-    letterSpacing: 0.5,
+    fontSize: 15,
+    fontWeight: '700',
+    letterSpacing: 0.3,
+    textTransform: 'uppercase',
+  },
+  activeIndicator: {
+    position: 'absolute',
+    bottom: 2,
+    left: '15%',
+    right: '15%',
+    height: 3,
+    borderRadius: 2,
   },
   actions: {
     flexDirection: 'row',
@@ -431,13 +527,15 @@ const styles = StyleSheet.create({
   ctaBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
+    paddingVertical: 13,
+    paddingHorizontal: 26,
     borderRadius: 100,
     shadowColor: Colors.primary,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.4,
+    shadowRadius: 12,
+    // @ts-ignore
+    transition: 'all 0.3s ease',
   },
   ctaText: {
     color: 'white',
@@ -445,12 +543,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   mobileMenuBtn: {
-      padding: 8,
+      width: 44,
+      height: 44,
+      borderRadius: 22,
+      alignItems: 'center',
+      justifyContent: 'center',
   },
   // Mobile Styles
   mobileOverlay: {
       flex: 1,
-      backgroundColor: 'rgba(0,0,0,0.5)',
+      backgroundColor: 'rgba(0,0,0,0.4)',
       flexDirection: 'row',
       justifyContent: 'flex-end',
   },
@@ -458,13 +560,17 @@ const styles = StyleSheet.create({
       flex: 1,
   },
   mobileSidebar: {
-      width: '80%',
-      maxWidth: 300,
+      width: '85%',
+      maxWidth: 340,
       height: '100%',
-      paddingTop: 20,
-      paddingHorizontal: 20,
+      paddingTop: 30,
+      paddingHorizontal: 28,
       borderLeftWidth: 1,
-      borderLeftColor: 'rgba(255,255,255,0.1)',
+      borderLeftColor: 'rgba(255,255,255,0.05)',
+      shadowColor: '#000',
+      shadowOffset: { width: -10, height: 0 },
+      shadowOpacity: 0.2,
+      shadowRadius: 20,
   },
   mobileHeader: {
       flexDirection: 'row',

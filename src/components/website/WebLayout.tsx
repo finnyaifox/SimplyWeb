@@ -23,6 +23,8 @@ export default function WebLayout({ children, style }: WebLayoutProps) {
 
   // Prüfen ob wir in der App sind (Tabs) oder auf der Landingpage
   const isAppActive = pathname.includes('(tabs)');
+  
+  console.log('[WebLayout] Render. Pathname:', pathname, 'isWeb:', isWeb);
 
   // Dynamic Scrollbar Styles
   const scrollbarStyles = `
@@ -35,17 +37,17 @@ export default function WebLayout({ children, style }: WebLayoutProps) {
       background-color: ${isDark ? '#000a08' : '#F9F8F6'};
     }
     ::-webkit-scrollbar-thumb {
-      background-color: ${isDark ? 'rgba(52, 211, 153, 0.2)' : 'rgba(0, 0, 0, 0.2)'};
-      border-radius: 7px;
+      background-color: ${isDark ? 'rgba(16, 185, 129, 0.3)' : 'rgba(164, 137, 104, 0.3)'};
+      border-radius: 10px;
       border: 4px solid ${isDark ? '#000a08' : '#F9F8F6'};
     }
     ::-webkit-scrollbar-thumb:hover {
-      background-color: ${isDark ? 'rgba(52, 211, 153, 0.4)' : 'rgba(0, 0, 0, 0.4)'};
+      background-color: ${isDark ? 'rgba(16, 185, 129, 0.5)' : 'rgba(164, 137, 104, 0.5)'};
     }
     /* Firefox */
     * {
-      scrollbar-width: auto;
-      scrollbar-color: ${isDark ? 'rgba(52, 211, 153, 0.2) #000a08' : 'rgba(0, 0, 0, 0.2) #F9F8F6'};
+      scrollbar-width: thin;
+      scrollbar-color: ${isDark ? 'rgba(16, 185, 129, 0.3) #000a08' : 'rgba(164, 137, 104, 0.3) #F9F8F6'};
     }
   `;
 
@@ -58,13 +60,21 @@ export default function WebLayout({ children, style }: WebLayoutProps) {
       
       {/* Background Image/Gradient Layer könnte hier hin */}
       
-      {/* Navigation immer sichtbar im Web - moved out of centerContainer for full width */}
-      <View style={{ width: '100%', zIndex: 9999 }}>
+      {/* Navigation immer sichtbar im Web - Fixed at top for better UX */}
+      <View style={{
+        width: '100%',
+        zIndex: 99999,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        elevation: 99
+      }} pointerEvents="box-none">
           <WebNavBar />
       </View>
 
       {/* Zentrierter Container für Inhalt */}
-      <View style={styles.centerContainer}>
+      <View style={[styles.centerContainer, { zIndex: 1, position: 'relative', paddingTop: 80 }]}>
           
           {/* Hauptinhalt */}
           <View style={styles.contentWrapper}>
