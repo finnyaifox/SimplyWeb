@@ -38,7 +38,7 @@ export default function WebNavBar() {
   const isMobile = width < 768;
 
   const handleLogoPress = () => {
-    console.log('[WebNavBar] Logo pressed!');
+    console.log('[WebNavBar] Logo pressed! Current path:', pathname);
     if (isMobile) {
       setIsMobileMenuOpen(false);
     }
@@ -46,10 +46,12 @@ export default function WebNavBar() {
     if (Platform.OS === 'web') {
       const heroEl = document.getElementById('hero');
       if (heroEl) {
+          console.log('[WebNavBar] Hero element found, scrolling to top.');
           heroEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
           window.history.pushState(null, '', '/');
       } else {
-          window.location.href = '/';
+          console.log('[WebNavBar] Hero element NOT found, using client-side routing via router.push');
+          router.push('/');
       }
     } else {
       router.push('/');
@@ -78,11 +80,13 @@ export default function WebNavBar() {
         const element = document.getElementById(sectionId === 'hero' ? 'hero' : sectionId);
         
         if (element) {
+            console.log('[WebNavBar] Section element found, scrolling.');
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
             window.history.pushState(null, '', sectionId === 'hero' ? '/' : `/#${sectionId}`);
         } else {
              // Element nicht gefunden -> wir sind wahrscheinlich nicht auf der Startseite
-             window.location.href = sectionId === 'hero' ? '/' : '/#' + sectionId;
+             console.log('[WebNavBar] Section element NOT found, using client-side routing via router.push');
+             router.push((sectionId === 'hero' ? '/' : `/?section=${sectionId}`) as any);
         }
     }
   };
@@ -351,6 +355,7 @@ export default function WebNavBar() {
                                 onPress={() => {
                                     setIsMobileMenuOpen(false);
                                     if (Platform.OS === 'web') {
+                                        console.log('[WebNavBar] Opening /chat-view in new window (causes 404 on static hosts without cleanUrls or SPA config)');
                                         window.open('/chat-view', '_blank');
                                     } else {
                                         router.push('/chat-view');
@@ -378,6 +383,7 @@ export default function WebNavBar() {
                                 setIsMobileMenuOpen(false);
                                 if (user) {
                                     if (Platform.OS === 'web') {
+                                        console.log('[WebNavBar] User logged in, opening /chat-view in new window (causes 404 on static hosts)');
                                         window.open('/chat-view', '_blank');
                                     } else {
                                         router.push('/chat-view');

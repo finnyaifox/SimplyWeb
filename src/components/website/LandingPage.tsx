@@ -23,7 +23,7 @@ import Animated, {
   runOnJS
 } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { BlurView } from 'expo-blur';
 import { PhoneFrameWrapper } from './PhoneFrameWrapper';
 import { useTranslation, Trans } from 'react-i18next';
@@ -579,14 +579,16 @@ export default function LandingPage() {
   const router = useRouter();
   const [isYearly, setIsYearly] = useState(false);
   const { t } = useTranslation();
+  const { section } = useLocalSearchParams();
 
   useEffect(() => {
-    if (Platform.OS === 'web' && window.location.hash) {
+    if (Platform.OS === 'web') {
       const hash = window.location.hash.replace('#', '');
-      if (hash) {
+      const targetSection = section || hash;
+      if (targetSection) {
         // Polling until the element is found after mount
         const attemptScroll = (retries = 0) => {
-          const element = document.getElementById(hash);
+          const element = document.getElementById(targetSection as string);
           if (element) {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
           } else if (retries < 10) {
@@ -596,7 +598,7 @@ export default function LandingPage() {
         setTimeout(attemptScroll, 100);
       }
     }
-  }, []);
+  }, [section]);
 
   const startApp = () => {
     router.push('/(tabs)?mode=chatOnly' as any);
