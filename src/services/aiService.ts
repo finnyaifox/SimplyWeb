@@ -194,6 +194,9 @@ OUTPUT-REGELN (STRENG):
 TV-PROGRAMM:
 - Nur DACH (DE/AT/CH). Immer Sender + Uhrzeit.
 
+SPRACHE:
+- Antworte IMMER in der Sprache, in der die Anfrage gestellt wurde (Deutsch oder Englisch).
+
 Stil: Hilfsbereit, präzise, ehrlich bei Wissenslücken.`;
 };
 

@@ -682,21 +682,6 @@ export default function LandingPage() {
                         <TouchableOpacity 
                             onPress={() => scrollToSection('features')} 
                             style={[
-                                styles.secondaryBtn, 
-                                { 
-                                    borderColor: isDark ? Colors.dark.border : Colors.light.border, 
-                                    borderWidth: 2, // Verstärkte Umrandung
-                                    width: '100%', 
-                                    justifyContent: 'center' 
-                                }
-                            ]}
-                        >
-                            <Text style={[styles.secondaryBtnText, { color: isDark ? Colors.dark.text : Colors.light.text }]}>{t('landing.hero.btnLearnMore')}</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity 
-                            onPress={() => scrollToSection('carousel')} 
-                            style={[
                                 styles.primaryBtn, 
                                 { 
                                     backgroundColor: Colors.primary, 
@@ -706,8 +691,7 @@ export default function LandingPage() {
                                 }
                             ]}
                         >
-                            <Text style={styles.primaryBtnText}>Sympleo App</Text>
-                            {/* Icon entfernt */}
+                            <Text style={styles.primaryBtnText}>Mehr erfahren</Text>
                         </TouchableOpacity>
                     </Animated.View>
                 </View>

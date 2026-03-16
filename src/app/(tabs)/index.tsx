@@ -975,11 +975,13 @@ export default function ChatScreen() {
                   { alignItems: 'center', justifyContent: 'center', marginBottom: 20, marginTop: 20 },
                   headerAnimatedStyle
                 ]}>
-                  <Image
-                    source={isDark ? logoDark : logoLight}
-                    style={{ width: 180, height: 60 }}
-                    resizeMode="contain"
-                  />
+                  <TouchableOpacity onPress={() => router.push('/')} activeOpacity={0.7}>
+                    <Image
+                      source={isDark ? logoDark : logoLight}
+                      style={{ width: 180, height: 60 }}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
                 </Reanimated.View>
               )}
               
