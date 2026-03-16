@@ -29,7 +29,7 @@ export default function WebSidebar({ isChatOnly }: { isChatOnly?: boolean }) {
       }
     ]}>
       <TouchableOpacity 
-        onPress={() => { router.push('/'); }}
+        onPress={() => { if (Platform.OS === 'web') window.location.href = '/'; }}
         style={[
           styles.backBar,
           { backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' }

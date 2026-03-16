@@ -691,7 +691,7 @@ export default function LandingPage() {
                                 }
                             ]}
                         >
-                            <Text style={styles.primaryBtnText}>Mehr erfahren</Text>
+                            <Text style={styles.primaryBtnText}>{t('landing.hero.btnLearnMore')}</Text>
                         </TouchableOpacity>
                     </Animated.View>
                 </View>

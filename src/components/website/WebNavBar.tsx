@@ -44,15 +44,7 @@ export default function WebNavBar() {
     }
     
     if (Platform.OS === 'web') {
-      const heroEl = document.getElementById('hero');
-      if (heroEl) {
-          console.log('[WebNavBar] Hero element found, scrolling to top.');
-          heroEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          window.history.pushState(null, '', '/');
-      } else {
-          console.log('[WebNavBar] Hero element NOT found, using client-side routing via router.push');
-          router.push('/');
-      }
+        window.location.href = '/';
     } else {
       router.push('/');
     }
