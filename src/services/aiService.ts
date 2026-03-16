@@ -159,7 +159,7 @@ const getSystemInstruction = () => {
     minute: '2-digit'
   });
 
-  return `Du bist SimplyAI.
+  return `Du bist Sympleo.
 
 ⚠️ SYSTEM-ZEIT & REALITÄTS-CHECK ⚠️
 Heute ist ${dateString}.

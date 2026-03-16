@@ -16,7 +16,7 @@ export default function UeberUnsPage() {
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>Die Mission</Text>
           <Text style={[styles.text, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
-            SimplyAI wurde mit dem Ziel entwickelt, künstliche Intelligenz für jeden nutzbar und gleichzeitig so einfach wie möglich zu machen. In einer Welt voller komplexer Tools setzen wir auf Reduktion und Klarheit.
+            Sympleo wurde mit dem Ziel entwickelt, künstliche Intelligenz für jeden nutzbar und gleichzeitig so einfach wie möglich zu machen. In einer Welt voller komplexer Tools setzen wir auf Reduktion und Klarheit.
           </Text>
         </View>
 
@@ -27,7 +27,7 @@ export default function UeberUnsPage() {
            <Text style={[styles.founderName, { color: isDark ? Colors.dark.text : Colors.light.text }]}>Leon</Text>
            <Text style={[styles.founderRole, { color: Colors.primary }]}>Gründer & Entwickler</Text>
            <Text style={[styles.text, { textAlign: 'center', marginTop: 20, color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
-              "Als leidenschaftlicher Entwickler glaube ich daran, dass Software uns Zeit schenken sollte, anstatt sie uns zu rauben. SimplyAI ist mein Beitrag zu einer fokussierteren digitalen Welt."
+              "Als leidenschaftlicher Entwickler glaube ich daran, dass Software uns Zeit schenken sollte, anstatt sie uns zu rauben. Sympleo ist mein Beitrag zu einer fokussierteren digitalen Welt."
            </Text>
         </View>
 

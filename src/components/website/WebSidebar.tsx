@@ -7,7 +7,7 @@ import { useTheme } from '@/context/ThemeContext';
 
 const NAV_ITEMS = [
   { name: 'Website', route: '/', icon: 'home-outline', activeIcon: 'home' },
-  { name: 'Simply', route: '/(tabs)', icon: 'chatbubble-ellipses-outline', activeIcon: 'chatbubble-ellipses' },
+  { name: 'Sympleo', route: '/(tabs)', icon: 'chatbubble-ellipses-outline', activeIcon: 'chatbubble-ellipses' },
   { name: 'Insights', route: '/(tabs)/insights', icon: 'stats-chart-outline', activeIcon: 'stats-chart' },
   { name: 'SiLive', route: '/(tabs)/silive', icon: 'radio-outline', activeIcon: 'radio' },
   { name: 'Settings', route: '/(tabs)/settings', icon: 'settings-outline', activeIcon: 'settings' },
@@ -49,7 +49,7 @@ export default function WebSidebar({ isChatOnly }: { isChatOnly?: boolean }) {
       </TouchableOpacity>
 
       <View style={styles.logoContainer}>
-         {/* Logo container empty as requested to remove "SimplyAI" text */}
+         {/* Logo container empty as requested to remove "Sympleo" text */}
       </View>
 
       <View style={styles.navContainer}>

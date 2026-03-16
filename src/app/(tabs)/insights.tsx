@@ -459,7 +459,7 @@ export default function InsightsScreen() {
           
           <View style={styles.headerContainer}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                <Text style={[styles.headerTitle, { color: theme.text }]}>Simply Insights</Text>
+                <Text style={[styles.headerTitle, { color: theme.text }]}>Sympleo Insights</Text>
                 <View 
                     style={{ 
                         backgroundColor: Colors.primary, 

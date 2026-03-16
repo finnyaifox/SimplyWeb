@@ -15,14 +15,14 @@ export default function ImpressumPage() {
         <Text style={[styles.sectionTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>Angaben gemäß § 5 TMG</Text>
         <Text style={[styles.text, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
           Leo Z.{"\n"}
-          SimplyAI{"\n"}
+          Sympleo{"\n"}
           [Straße Hausnummer]{"\n"}
           [PLZ Ort]
         </Text>
 
         <Text style={[styles.sectionTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>Kontakt</Text>
         <Text style={[styles.text, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
-          E-Mail: hallo@simplyai.app
+          E-Mail: support@sympleo.de
         </Text>
 
         <Text style={[styles.sectionTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>Umsatzsteuer-ID</Text>

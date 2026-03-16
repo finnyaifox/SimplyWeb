@@ -545,7 +545,7 @@ export default function ChatScreen() {
     playClickSound();
     try {
       await Share.share({
-        message: `${text}\n\nSimplyAi - The New Simply Ki Chat`,
+        message: `${text}\n\nSympleo - The New Ki Chat`,
       });
     } catch (error) {
       console.error('Error sharing:', error);

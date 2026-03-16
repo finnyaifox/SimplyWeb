@@ -1,5 +1,5 @@
 /**
- * Simply App Design System Colors
+ * Sympleo App Design System Colors
  * Theme: Modern Glassmorphism (Dark & Light)
  */
 

@@ -706,7 +706,7 @@ export default function LandingPage() {
                                 }
                             ]}
                         >
-                            <Text style={styles.primaryBtnText}>Simply App</Text>
+                            <Text style={styles.primaryBtnText}>Sympleo App</Text>
                             {/* Icon entfernt */}
                         </TouchableOpacity>
                     </Animated.View>
@@ -893,7 +893,7 @@ export default function LandingPage() {
                 
                 <TouchableOpacity style={[styles.contactBtn, { backgroundColor: Colors.primary }]}>
                     <Ionicons name="mail" size={28} color="white" />
-                    <Text style={styles.contactBtnText}>hallo@simplyai.app</Text>
+                    <Text style={styles.contactBtnText}>support@sympleo.de</Text>
                 </TouchableOpacity>
 
                 <View style={styles.socialLinks}>
@@ -920,7 +920,7 @@ export default function LandingPage() {
             />
             <View style={styles.footerContent}>
                 <View style={styles.footerCol}>
-                <Text style={[styles.footerBrand, { color: isDark ? Colors.dark.text : Colors.light.text }]}>Simply</Text>
+                <Text style={[styles.footerBrand, { color: isDark ? Colors.dark.text : Colors.light.text }]}>Sympleo</Text>
                 <Text style={[styles.footerText, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
                     {t('landing.footer.tagline')}
                 </Text>
@@ -944,7 +944,7 @@ export default function LandingPage() {
                 </View>
             </View>
             <View style={[styles.footerDivider, { backgroundColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' }]} />
-            <Text style={[styles.copyright, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>© {new Date().getFullYear()} Simply.</Text>
+            <Text style={[styles.copyright, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>© {new Date().getFullYear()} Sympleo.</Text>
         </View>
 
 

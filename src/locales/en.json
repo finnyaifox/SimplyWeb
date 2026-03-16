@@ -15,7 +15,7 @@
   },
   "landing": {
     "hero": {
-      "badge": "Simply – The future is simple ✨",
+      "badge": "Sympleo – The future is simple ✨",
       "title": "Perfect <1>Insights</1> for your life.",
       "subtitle": "No more chaos. Experience the clarity of intelligent analytics, Ephemeral Chat, and SiLive Voice.",
       "btnTheApp": "The App",
@@ -34,7 +34,7 @@
         "desc": "Understand your patterns with beautifully visualized data and AI analytics."
       },
       "f3": {
-        "title": "Simply Voice",
+        "title": "Sympleo Voice",
         "desc": "Speak naturally with your AI. Real-time interaction for maximum productivity."
       },
       "f4": {
@@ -60,28 +60,28 @@
       "choose": "Choose",
       "savings": "Savings",
       "p1": {
-        "title": "Starter",
-        "price": "€0",
-        "period": "/ month",
-        "features": ["Basic Chat (No storage)", "Standard Insights", "Community Support"]
+        "title": "Trial",
+        "price": "14 Days Free",
+        "period": "",
+        "features": ["Test all Pro features", "No credit card required", "Full access to Insights"]
       },
       "p2": {
         "title": "Pro (Monthly)",
-        "price": "€2.90",
+        "price": "€3.50",
         "period": "/ month",
         "features": ["Unlimited Chat", "Advanced AI Insights via Supabase", "SiLive Personalized Events", "Priority Support"]
       },
       "p3": {
         "title": "Pro (Yearly)",
-        "price": "€29",
+        "price": "€37",
         "period": "/ year",
-        "features": ["Everything in Pro Monthly", "Best Value", "2 months free", "SiLive Priority"]
+        "features": ["Everything in Pro Monthly", "Best Value", "Save with yearly plan", "SiLive Priority"]
       }
     },
     "about": {
       "title": "The Vision",
       "subtitle": "Behind the code.",
-      "text1": "<1>Simply</1> is not the product of a giant corporation. It is the result of a clear vision: Technology should not overwhelm us, but rather give us <2>clarity</2>.",
+      "text1": "<1>Sympleo</1> is not the product of a giant corporation. It is the result of a clear vision: Technology should not overwhelm us, but rather give us <2>clarity</2>.",
       "text2": "As a <1>one-man founder</1>, I develop this app with a passion for details often missed in large teams. Every feature, every animation, and every line of code was written to help you regain focus in a noisy world.",
       "founderName": "Leo Z.",
       "role": "Founder & Developer"
@@ -119,7 +119,7 @@
       }
     },
     "insights": {
-      "headerTitle": "Simply Insights",
+      "headerTitle": "Sympleo Insights",
       "demo": "DEMO",
       "btnRefresh": "Refresh data",
       "btnLoading": "Loading data...",

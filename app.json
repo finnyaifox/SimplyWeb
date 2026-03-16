@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "SimplyApp",
-    "slug": "SimplyApp",
+    "name": "Sympleo",
+    "slug": "sympleo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "simplyapp",
+    "scheme": "sympleo",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

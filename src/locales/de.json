@@ -15,7 +15,7 @@
   },
   "landing": {
     "hero": {
-      "badge": "Simply – Die Zukunft ist einfach ✨",
+      "badge": "Sympleo – Die Zukunft ist einfach ✨",
       "title": "Perfekte <1>Insights</1> für dein Leben.",
       "subtitle": "Kein Chaos mehr. Erlebe die Klarheit von intelligenten Analysen, Ephemeral Chat und SiLive Voice.",
       "btnTheApp": "Die App",
@@ -34,7 +34,7 @@
         "desc": "Verstehe deine Muster mit wunderschön visualisierten Daten und KI-Analysen."
       },
       "f3": {
-        "title": "Simply Voice",
+        "title": "Sympleo Voice",
         "desc": "Sprich natürlich mit deiner KI. Echtzeit-Interaktion für maximale Produktivität."
       },
       "f4": {
@@ -60,28 +60,28 @@
       "choose": "Wählen",
       "savings": "Sparvorteil",
       "p1": {
-        "title": "Starter",
-        "price": "0€",
-        "period": "/ Monat",
-        "features": ["Basis Chat (Keine Speicherung)", "Standard Insights", "Community Support"]
+        "title": "Trial",
+        "price": "14 Tage Free",
+        "period": "",
+        "features": ["Alle Pro Features testen", "Keine Kreditkarte nötig", "Voller Zugriff auf Insights"]
       },
       "p2": {
         "title": "Pro (Monatlich)",
-        "price": "2,90€",
+        "price": "3,50€",
         "period": "/ Monat",
         "features": ["Unbegrenzter Chat", "Advanced AI Insights via Supabase", "SiLive Personalisierte Events", "Priority Support"]
       },
       "p3": {
         "title": "Pro (Jährlich)",
-        "price": "29€",
+        "price": "37€",
         "period": "/ Jahr",
-        "features": ["Alles aus Pro Monatlich", "Bester Preis", "2 Monate geschenkt", "SiLive Priority"]
+        "features": ["Alles aus Pro Monatlich", "Bester Preis", "Günstiger im Jahresabo", "SiLive Priority"]
       }
     },
     "about": {
       "title": "Die Vision",
       "subtitle": "Hinter dem Code.",
-      "text1": "<1>Simply</1> ist nicht das Produkt einer riesigen Corporation. Es ist das Ergebnis einer klaren Vision: Technologie sollte uns nicht überwältigen, sondern uns <2>Klarheit</2> schenken.",
+      "text1": "<1>Sympleo</1> ist nicht das produkt einer riesigen Corporation. Es ist das Ergebnis einer klaren Vision: Technologie sollte uns nicht überwältigen, sondern uns <2>Klarheit</2> schenken.",
       "text2": "Als <1>One-Man-Gründer</1> entwickle ich diese App mit einer Leidenschaft für Details, die man in großen Teams oft vermisst. Jedes Feature, jede Animation und jede Zeile Code wurde geschrieben, um dir zu helfen, den Fokus in einer lauten Welt zurückzugewinnen.",
       "founderName": "Leo Z.",
       "role": "Gründer & Entwickler"
@@ -119,7 +119,7 @@
       }
     },
     "insights": {
-      "headerTitle": "Simply Insights",
+      "headerTitle": "Sympleo Insights",
       "demo": "DEMO",
       "btnRefresh": "Daten aktualisieren",
       "btnLoading": "Lade Daten...",

@@ -153,7 +153,7 @@ export default function TabLayout() {
             options={{
               headerTitle: '',
               headerShown: false,
-              tabBarIcon: ({ focused }) => <TabIcon focused={focused} title="Simply" />,
+              tabBarIcon: ({ focused }) => <TabIcon focused={focused} title="Sympleo" />,
             }}
           />
           <Tabs.Screen

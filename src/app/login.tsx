@@ -66,7 +66,7 @@ export default function LoginScreen() {
                 </View>
                 
                 <Text style={[styles.brandName, { color: isDark ? Colors.dark.text : Colors.light.text }]}>
-                    Simply<Text style={{color: Colors.primary}}>AI</Text>
+                    Sympleo
                 </Text>
                 
                 <Text style={[styles.tagline, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>

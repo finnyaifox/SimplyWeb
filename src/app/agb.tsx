@@ -14,12 +14,12 @@ export default function AGBPage() {
         
         <Text style={[styles.sectionTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>1. Geltungsbereich</Text>
         <Text style={[styles.text, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
-          Diese AGB gelten für alle Leistungen von SimplyAI. Mit der Nutzung der App erklären Sie sich mit diesen Bedingungen einverstanden.
+          Diese AGB gelten für alle Leistungen von Sympleo. Mit der Nutzung der App erklären Sie sich mit diesen Bedingungen einverstanden.
         </Text>
 
         <Text style={[styles.sectionTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>2. Leistungsbeschreibung</Text>
         <Text style={[styles.text, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
-          SimplyAI bietet KI-gestützte Insights und Kommunikations-Tools. Wir garantieren keine 100%ige Verfügbarkeit, bemühen uns jedoch um einen reibungslosen Betrieb.
+          Sympleo bietet KI-gestützte Insights und Kommunikations-Tools. Wir garantieren keine 100%ige Verfügbarkeit, bemühen uns jedoch um einen reibungslosen Betrieb.
         </Text>
 
         <Text style={[styles.sectionTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>3. Datenschutz & Privatsphäre</Text>
@@ -29,7 +29,7 @@ export default function AGBPage() {
 
         <Text style={[styles.sectionTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>4. Haftung</Text>
         <Text style={[styles.text, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
-          SimplyAI haftet nicht für Schäden, die durch die Nutzung oder Nichtverfügbarkeit der App entstehen, sofern diese nicht auf Vorsatz oder grober Fahrlässigkeit beruhen.
+          Sympleo haftet nicht für Schäden, die durch die Nutzung oder Nichtverfügbarkeit der App entstehen, sofern diese nicht auf Vorsatz oder grober Fahrlässigkeit beruhen.
         </Text>
 
         <Text style={[styles.sectionTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>5. Änderungen</Text>

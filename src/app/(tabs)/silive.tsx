@@ -239,8 +239,8 @@ export default function SiLiveScreen() {
   const handleShare = async (event: EventResult) => {
     playClickSound();
     try {
-        const downloadLink = 'https://simplyai.app/download';
-        const message = `${event.title}\n📅 ${event.date}\n📍 ${event.location}\n\n${event.description}\n\nEntdeckt mit SimplyWeb: ${downloadLink}`;
+        const downloadLink = 'https://sympleo.de/download';
+        const message = `${event.title}\n📅 ${event.date}\n📍 ${event.location}\n\n${event.description}\n\nEntdeckt mit Sympleo: ${downloadLink}`;
         
         await Share.share({
             message: message,

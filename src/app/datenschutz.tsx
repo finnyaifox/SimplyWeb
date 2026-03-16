@@ -17,7 +17,7 @@ export default function DatenschutzPage() {
           Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.
         </Text>
 
-        <Text style={[styles.sectionTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>2. Datenerfassung in SimplyAI</Text>
+        <Text style={[styles.sectionTitle, { color: isDark ? Colors.dark.text : Colors.light.text }]}>2. Datenerfassung in Sympleo</Text>
         <Text style={[styles.text, { color: isDark ? Colors.dark.textSecondary : Colors.light.textSecondary }]}>
           <Text style={{ fontWeight: 'bold' }}>Chats:</Text> Wir speichern keine Chats. Alle Unterhaltungen sind ephemeral und verschwinden nach der Sitzung.{"\n\n"}
           <Text style={{ fontWeight: 'bold' }}>Insights:</Text> Für Pro-Nutzer werden anonymisierte Muster verarbeitet, um Insights zu generieren. Diese Daten werden sicher über Supabase gespeichert.
