@@ -404,8 +404,8 @@ export default function SettingsScreen() {
             >
                 <View style={styles.premiumContent}>
                     <View>
-                        <Text style={styles.premiumTitle}>Upgrade auf Premium</Text>
-                        <Text style={styles.premiumPrice}>Nur 2,99€ / Monat</Text>
+                        <Text style={styles.premiumTitle}>{t('tabs.settings.premium.title')}</Text>
+                        <Text style={styles.premiumPrice}>{t('tabs.settings.premium.price')}</Text>
                     </View>
                     <TouchableOpacity
                       style={styles.premiumButton}
@@ -416,14 +416,14 @@ export default function SettingsScreen() {
                         Alert.alert('Funktion noch nicht verfügbar', 'Premium-Funktionen kommen bald!');
                       }}
                     >
-                        <Text style={styles.premiumButtonText}>Upgrade</Text>
+                        <Text style={styles.premiumButtonText}>{t('tabs.settings.premium.button')}</Text>
                     </TouchableOpacity>
                 </View>
             </LinearGradient>
             
             <View style={styles.row}>
                 <Text style={[styles.rowText, { color: currentTheme.textSecondary }]}>Status:</Text>
-                <Text style={[styles.rowText, { color: currentTheme.text, fontWeight: 'bold' }]}>Premium: Inaktiv</Text>
+                <Text style={[styles.rowText, { color: currentTheme.text, fontWeight: 'bold' }]}>{t('tabs.settings.premium.status')}</Text>
             </View>
              <View style={[styles.divider, { backgroundColor: currentTheme.border }]} />
             <TouchableOpacity
@@ -435,7 +435,7 @@ export default function SettingsScreen() {
                 Alert.alert('Funktion noch nicht verfügbar', 'Abo-Verwaltung kommt bald!');
               }}
             >
-                <Text style={[styles.actionText, { color: currentTheme.text }]}>Abo verwalten</Text>
+                <Text style={[styles.actionText, { color: currentTheme.text }]}>{t('tabs.settings.premium.manage')}</Text>
                 <CreditCard size={20} color={currentTheme.textSecondary} />
             </TouchableOpacity>
           </SettingContainer>

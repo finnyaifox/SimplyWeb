@@ -146,6 +146,13 @@
     "settings": {
       "headerTitle": "Einstellungen",
       "guest": "Gast",
+      "premium": {
+        "title": "Upgrade auf Premium",
+        "price": "Nur 3,50€ / Monat",
+        "button": "Upgrade",
+        "status": "Premium: Inaktiv",
+        "manage": "Abo verwalten"
+      },
       "sections": {
         "profile": "Profil",
         "ephemeralChat": "Ephemeral Chat",
