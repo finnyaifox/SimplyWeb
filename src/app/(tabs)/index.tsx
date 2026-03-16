@@ -1119,11 +1119,8 @@ export default function ChatScreen() {
                         styles.bottomControls,
                         {
                             zIndex: 1000,
-                            // FIX: Wenn kein Fokus, massiver Abstand nach unten (120), damit Input & Banner
-                            // ÜBER der TabBar/HomeIndicator schweben und voll sichtbar sind.
-                            // Bei Fokus (Keyboard offen) erhöhen wir das Padding auf 40, um sicherzustellen,
-                            // dass der Banner unter dem Input nicht von der Tastaturkante abgeschnitten wird.
-                            paddingBottom: isInputFocused ? 40 : (isMobileWeb ? 40 : 120)
+                            // FIX: Padding optimiert für Tablets/Web, um Überlagerung zu vermeiden
+                            paddingBottom: isInputFocused ? 20 : (isWeb ? 40 : 100)
                         }
                     ]}>
                 {/* Bottom Navigation: X unten links - ENTFERNT */}
@@ -1433,7 +1430,7 @@ const styles = StyleSheet.create({
   chatList: {
       paddingHorizontal: 16,
       paddingTop: 20,
-      paddingBottom: 100, // Erhöhtes Padding für besseres Scrolling am Ende
+      paddingBottom: 160, // Erhöht, damit Nachrichten nicht vom Input verdeckt werden
       flexGrow: 1,
   },
   messageRow: {

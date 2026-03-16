@@ -35,7 +35,7 @@ export default function WebNavBar() {
     return () => subscription?.remove();
   }, []);
 
-  const isMobile = width < 768;
+  const isMobile = width < 1024; // Erhöht auf 1024 für besseren Tablet-Support
 
   const handleLogoPress = () => {
     console.log('[WebNavBar] Logo pressed! Current path:', pathname);
@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
   },
   navLinks: {
     flexDirection: 'row',
-    gap: 36,
+    gap: 20, // Reduziert von 36 für mehr Flexibilität
     paddingHorizontal: 20,
     paddingVertical: 10,
     alignItems: 'center',
@@ -511,8 +511,8 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 18,
-    zIndex: 20,
+    gap: 12, // Reduziert von 18
+    zIndex: 40, // Erhöht
   },
   themeToggle: {
     width: 40,
